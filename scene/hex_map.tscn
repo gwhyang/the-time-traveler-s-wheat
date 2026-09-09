@@ -3,11 +3,15 @@
 [ext_resource type="Script" uid="uid://d2ivomvp03qve" path="res://scene/hex_map.gd" id="1_map"]
 [ext_resource type="Script" uid="uid://bapa4shytpy28" path="res://scene/map_player.gd" id="2_player"]
 
+[sub_resource type="TileSet" id="TileSet_rfj7n"]
+
 [node name="HexMap" type="Node2D" unique_id=1531962213]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=293515793]
+tile_set = SubResource("TileSet_rfj7n")
 script = ExtResource("1_map")
-edge_spawn_chance = 0.54
+point_spawn_chance = 0.8
+edge_spawn_chance = 0.47
 
 [node name="Player" type="Node2D" parent="." unique_id=187553905]
 z_index = 10

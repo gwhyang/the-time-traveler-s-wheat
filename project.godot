@@ -20,9 +20,14 @@ Dialogic="*uid://ds2q0uclmolvu"
 
 [dialogic]
 
-directories/dch_directory={}
-directories/dtl_directory={}
+directories/dch_directory={
+"character1": "res://Dialogue/characters/character1.dch"
+}
+directories/dtl_directory={
+"timeline": "res://Dialogue/timelines/timeline.dtl"
+}
 layout/style_directory={}
+glossary/default_case_sensitive=true
 
 [display]
 
