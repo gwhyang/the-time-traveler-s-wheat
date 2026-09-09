@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bitkcegomfte3"]
+
+[ext_resource type="Script" uid="uid://d2ivomvp03qve" path="res://scene/hex_map.gd" id="1_map"]
+[ext_resource type="Script" uid="uid://bapa4shytpy28" path="res://scene/map_player.gd" id="2_player"]
+
+[node name="HexMap" type="Node2D" unique_id=1531962213]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=293515793]
+script = ExtResource("1_map")
+edge_spawn_chance = 0.54
+
+[node name="Player" type="Node2D" parent="." unique_id=187553905]
+z_index = 10
+script = ExtResource("2_player")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1669228898]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="Instructions" type="Label" parent="Player/Camera2D" unique_id=1191175156]
+z_index = 20
+offset_left = -462.0
+offset_top = -250.0
+offset_right = -75.0
+offset_bottom = -218.0
+theme_override_colors/font_color = Color(0.9, 0.94, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "WASD / 方向键移动 · 绿色线表示可通行的边"
