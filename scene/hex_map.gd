@@ -68,7 +68,6 @@ func _refresh_visible_world(force: bool) -> void:
 	var camera := get_viewport().get_camera_2d()
 	if camera == null:
 		return
-
 	var viewport_size := get_viewport_rect().size / camera.zoom
 	var camera_center := to_local(camera.get_screen_center_position())
 	var visible_rect := Rect2(camera_center - viewport_size * 0.5, viewport_size)
@@ -92,7 +91,6 @@ func _refresh_visible_world(force: bool) -> void:
 		_generation_by_cell[cell] = int(_generation_by_cell.get(cell, 0)) + 1
 
 	queue_redraw()
-
 
 func _cells_covering_rect(rect: Rect2) -> Array[Vector2i]:
 	var center_cell := local_to_axial(rect.get_center())

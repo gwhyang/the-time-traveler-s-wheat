@@ -1,0 +1,28 @@
+[background arg="res://assets/background/屏幕截图 2026-09-10 232835.png" fade="0.0"]
+111111
+character1: aaa
+join character1 left [animation="Zoom In"]
+character1: 啊啊啊啊
+join character1 center
+character1: 啊\
+啊\
+aa\
+aa\
+啊a啊aa啊
+character1: 1 还是 2？
+label l1
+- 1
+	character1: 1
+	set {a} = true
+	jump l1
+- 2
+	character1: 2
+	set {b} = true
+	jump l1
+- 3 | [if {a} and {b}    ==    true] [else="disable" alt_text="先点那两个对话"]
+	character1: 3
+	character1: [pause = 0.5] a [pause = 0.5]b[pause = 0.5]  c[pause = 0.5] d[pause = 0.5] e\
+	[n] [lspeed = 0.1] e f g h i j k [lspeed = 3] l m n o p q
+- 4
+	character1: <q r s t/u v w x/y z>
+	jump l1

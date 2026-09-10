@@ -1,13 +1,46 @@
-[gd_scene format=3 uid="uid://bitkcegomfte3"]
+[gd_scene format=4 uid="uid://bitkcegomfte3"]
 
+[ext_resource type="Texture2D" uid="uid://cyg07y2x3qng1" path="res://assets/tilemap/hexagonAll_sheet.png" id="1_bb4wd"]
 [ext_resource type="Script" uid="uid://d2ivomvp03qve" path="res://scene/hex_map.gd" id="1_map"]
 [ext_resource type="Script" uid="uid://bapa4shytpy28" path="res://scene/map_player.gd" id="2_player"]
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vcjau"]
+texture = ExtResource("1_bb4wd")
+separation = Vector2i(2, 2)
+texture_region_size = Vector2i(120, 140)
+0:12/0 = 0
+0:12/0/terrain_set = 0
+0:12/0/terrain = 1
+0:12/0/terrains_peering_bit/right_side = 1
+0:12/0/terrains_peering_bit/bottom_right_side = 1
+0:12/0/terrains_peering_bit/bottom_left_side = 1
+0:12/0/terrains_peering_bit/left_side = 1
+0:12/0/terrains_peering_bit/top_left_side = 1
+0:12/0/terrains_peering_bit/top_right_side = 1
+5:1/0 = 0
+5:1/0/terrain_set = 0
+5:1/0/terrain = 0
+5:1/0/terrains_peering_bit/right_side = 0
+5:1/0/terrains_peering_bit/bottom_right_side = 0
+5:1/0/terrains_peering_bit/bottom_left_side = 0
+5:1/0/terrains_peering_bit/left_side = 0
+5:1/0/terrains_peering_bit/top_left_side = 0
+5:1/0/terrains_peering_bit/top_right_side = 0
+
 [sub_resource type="TileSet" id="TileSet_rfj7n"]
+tile_shape = 3
+tile_size = Vector2i(120, 140)
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Terrain 0"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+terrain_set_0/terrain_1/name = "Terrain 1"
+terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
+sources/0 = SubResource("TileSetAtlasSource_vcjau")
 
 [node name="HexMap" type="Node2D" unique_id=1531962213]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=293515793]
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAEAAAABAAAAAAAFAAEAAAACAAAAAAAFAAEAAAADAAAAAAAFAAEAAAAEAAAAAAAFAAEAAAAFAAAAAAAFAAEAAAAGAAAAAAAFAAEAAAAHAAAAAAAFAAEAAAAIAAAAAAAFAAEAAAAAAAEAAAAAAAwAAAAAAAIAAAAAAAwAAAAAAAMAAAAAAAwAAAAAAAQAAAAAAAwAAAAAAAUAAAAAAAwAAAAAAAYAAAAAAAwAAAAAAAcAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAP//AAAAAAwAAAAAAP7/AAAAAAwAAAAAAP3/AAAAAAwAAAAAAPz/AAAAAAwAAAAAAPv/AAAAAAwAAAAAAPr/AAAAAAwAAAAAAPn/AAAAAAwAAAD//wAAAAAFAAEAAAD+/wAAAAAFAAEAAAD9/wAAAAAFAAEAAAD8/wAAAAAFAAEAAAA=")
 tile_set = SubResource("TileSet_rfj7n")
 script = ExtResource("1_map")
 point_spawn_chance = 0.8
