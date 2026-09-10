@@ -18,6 +18,7 @@ func _process(delta: float) -> void:
 		if timeline_component.has_entity(id):
 			Game.disable_move = true
 			Dialogic.start(timeline_component.entity_find(id))
+			timeline_component.entity_free(id)
 		if hint_component.has_entity(id):
 			var node:= hint_component.entity_find(id) as Node
 			node.queue_free()
