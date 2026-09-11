@@ -21,9 +21,9 @@ func _process(delta: float) -> void:
 			timeline_component.entity_free(id)
 		if hint_component.has_entity(id):
 			print(id)
-			var node:= hint_component.entity_find(id) as Node
-			node.queue_free()
-			hint_component.entity_free(id)
+			var node:= hint_component.entity_free(id) as Node
+			if is_instance_valid(node) and not node.is_queued_for_deletion():
+				node.queue_free()
 			print(id," at ",hint_component.dense)
 
 func after_player_move():
@@ -70,7 +70,9 @@ func custom_free_method(id:int):
 		value= c.entity_free(id)
 		print(id)
 		if value is Node:
-			value.queue_free()
+			var node:= value as Node
+			if is_instance_valid(node) and not node.is_queued_for_deletion():
+				node.queue_free()
 			#print("free2 ",id)
 			print(id," at ",c.dense)
 

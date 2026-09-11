@@ -266,15 +266,19 @@ class Component:
 		values.append(value)
 	
 	func entity_free(id:int)->Variant:
+		if not has_entity(id):
+			return null
 		var dense_index0:int = sparse[id]
 		var last_id:int = dense[-1]
+		var freed_value:Variant = values[dense_index0]
 		
 		sparse[last_id] =dense_index0
 		dense[dense_index0] = dense[-1]
 		values[dense_index0] = values[-1]
 		
 		dense.pop_back()
-		return values.pop_back()
+		values.pop_back()
+		return freed_value
 	
 	func value_id_all(value:Variant)->PackedInt32Array:
 		var res:PackedInt32Array
