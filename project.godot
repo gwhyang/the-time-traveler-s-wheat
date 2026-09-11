@@ -22,11 +22,36 @@ Game="*uid://d2w4afnaqvsa"
 [dialogic]
 
 directories/dch_directory={
-"character1": "res://Dialogue/characters/character1.dch"
+"character1": "res://Dialogue/characters/character1.dch",
+"charlotte": "res://Dialogue/characters/charlotte.dch",
+"classmate": "res://Dialogue/characters/classmate.dch",
+"kai": "res://Dialogue/characters/kai.dch",
+"npc_d": "res://Dialogue/characters/npc_d.dch",
+"npc_e": "res://Dialogue/characters/npc_e.dch",
+"passerby_a": "res://Dialogue/characters/passerby_a.dch",
+"passerby_b": "res://Dialogue/characters/passerby_b.dch",
+"passerby_c": "res://Dialogue/characters/passerby_c.dch",
+"professor": "res://Dialogue/characters/professor.dch",
+"reporter": "res://Dialogue/characters/reporter.dch",
+"teacher": "res://Dialogue/characters/teacher.dch"
 }
 directories/dtl_directory={
 "timeline": "res://Dialogue/timelines/timeline1.dtl",
-"timeline2": "res://Dialogue/timelines/timeline2.dtl"
+"timeline10": "res://Dialogue/timelines/timeline10.dtl",
+"timeline11": "res://Dialogue/timelines/timeline11.dtl",
+"timeline12": "res://Dialogue/timelines/timeline12.dtl",
+"timeline13": "res://Dialogue/timelines/timeline13.dtl",
+"timeline14": "res://Dialogue/timelines/timeline14.dtl",
+"timeline15": "res://Dialogue/timelines/timeline15.dtl",
+"timeline16": "res://Dialogue/timelines/timeline16.dtl",
+"timeline2": "res://Dialogue/timelines/timeline2.dtl",
+"timeline3": "res://Dialogue/timelines/timeline3.dtl",
+"timeline4": "res://Dialogue/timelines/timeline4.dtl",
+"timeline5": "res://Dialogue/timelines/timeline5.dtl",
+"timeline6": "res://Dialogue/timelines/timeline6.dtl",
+"timeline7": "res://Dialogue/timelines/timeline7.dtl",
+"timeline8": "res://Dialogue/timelines/timeline8.dtl",
+"timeline9": "res://Dialogue/timelines/timeline9.dtl"
 }
 layout/style_directory={}
 glossary/default_case_sensitive=true

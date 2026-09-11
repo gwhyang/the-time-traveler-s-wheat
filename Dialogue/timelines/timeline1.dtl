@@ -1,27 +1,14 @@
-111111
-111111
-join character1 left [animation="Zoom In"]
-character1: 啊啊啊啊
-join character1 center
-character1: 啊\
-啊\
-aa\
-aa\
-啊a啊aa啊
-character1: 1 还是 2？
-label l1
-- 1
-	character1: 1
-	set {a} = true
-	jump l1
-- 2
-	character1: 2
-	set {b} = true
-	jump l1
-- 3 | [if {a} and {b}    ==    true] [else="disable" alt_text="先点那两个对话"]
-	character1: 3
-	character1: [pause = 0.5] a [pause = 0.5]b[pause = 0.5]  c[pause = 0.5] d[pause = 0.5] e\
-	[n] [lspeed = 0.1] e f g h i j k [lspeed = 3] l m n o p q
-- 4
-	character1: <q r s t/u v w x/y z>
-	jump l1
+你又醒了。仍然不清楚现在是哪一年。
+时间对你来说，不过是一条被搅成一团的录像带。你永远不知道下一帧会连在哪里。
+你像是一个局外人那般，俯视生命本身。
+但也有好处，你时常安慰自己，你能够在时空里改变些什么，或许吧。
+
+日记
+你是何时拥有这项能力的？你不记得了。
+只是有一天睁开眼，发现自己正在出生那年的火车上倒行，窗外是一片白雪。
+自那时起，你的生命也开始飘离。
+
+电脑
+你会用它查一些新闻和事件，多亏了它，你才能够确定，你到底穿越到了何时的哪里。
+
+玩家从过道离开。
