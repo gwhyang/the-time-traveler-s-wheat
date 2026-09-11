@@ -11,6 +11,17 @@ var hint_component:Component = Component.new()
 
 var entity_to_free:Array[int]
 
+func _ready() -> void:
+	player_move_to(Vector2i.ZERO)
+
+func _input(event: InputEvent) -> void:
+	if !Game.game_mode==Game.GameMode.WALK:return
+	if event.is_action_released("move"):
+		var desti:= local_to_map(to_local(get_global_mouse_position()))
+		if not can_player_move_to(desti):return
+		if desti == player_cell:return
+		player_move_to(desti)
+
 
 func _process(delta: float) -> void:
 	queue_redraw()
@@ -75,7 +86,6 @@ func custom_free_method(id:int):
 				node.queue_free()
 			#print("free2 ",id)
 			print(id," at ",c.dense)
-
 
 func apply_tile_resource(res:TileResource,cell:Vector2i):
 	var sprite:= Sprite2D.new()

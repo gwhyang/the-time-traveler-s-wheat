@@ -2,7 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://cyg07y2x3qng1" path="res://assets/tilemap/hexagonAll_sheet.png" id="1_txmk2"]
 [ext_resource type="Script" uid="uid://cqmjwxkvf8smy" path="res://scene/game_map.gd" id="2_w4qq1"]
+[ext_resource type="Script" uid="uid://cket42q10u0nv" path="res://scene/path_painting.gd" id="3_m5mgf"]
 [ext_resource type="Texture2D" uid="uid://dfio1gmy5hqq4" path="res://icon.svg" id="3_w4qq1"]
+[ext_resource type="Script" uid="uid://0821fg1gq1q2" path="res://scene/debug_display.gd" id="4_emkrx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5mgf"]
 texture = ExtResource("1_txmk2")
@@ -46,11 +48,26 @@ sources/0 = SubResource("TileSetAtlasSource_m5mgf")
 
 [node name="World" type="Node2D" unique_id=768379252]
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1607535154 node_paths=PackedStringArray("player")]
+[node name="world_map" type="TileMapLayer" parent="." unique_id=1607535154 node_paths=PackedStringArray("player")]
+unique_name_in_owner = true
 tile_map_data = PackedByteArray("AAAAAAAAAAAFAAUAAAAAAP//AAAFAAUAAAABAAAAAAAFAAUAAAAAAAEAAAAFAAUAAAD//wEAAAAFAAUAAAD//wAAAAAFAAUAAAD/////AAAFAAUAAAA=")
 tile_set = SubResource("TileSet_emkrx")
 script = ExtResource("2_w4qq1")
 player = NodePath("../Sprite2D")
+
+[node name="path_painting" type="Node2D" parent="world_map" unique_id=902392242]
+script = ExtResource("3_m5mgf")
+line_pice_count = 5
+dash_ratio = 0.75
+noise1_x_scale = 10.0
+noise1_y_scale = 10.0
+noise2_x_scale = 1.0
+noise2_y_scale = 1.0
+noise1_frequency = 0.024
+
+[node name="debug_display" type="Node2D" parent="world_map" unique_id=318105889]
+visible = false
+script = ExtResource("4_emkrx")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1623943634]
 scale = Vector2(0.305, 0.305)

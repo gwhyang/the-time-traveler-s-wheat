@@ -5,30 +5,6 @@ class_name HexMap
 
 ## 场景上演出的数据
 
-func _input(event: InputEvent) -> void:
-	if !Game.game_mode==Game.GameMode.WALK:return
-	if event.is_action_released("move"):
-		var desti:= local_to_map(to_local(get_global_mouse_position()))
-		if desti == player_cell:return
-		player_move_to(desti)
-
-
-func _process(delta: float) -> void:
-	queue_redraw()
-
-func _draw() -> void:
-	var points:Array[Vector2i]
-	for e:Vector4i in edges:
-		points = get_edge_points(e)
-		draw_line(to_global(map_to_local(points[0])),to_global(map_to_local(points[1])), Color(0.35, 0.9, 0.68), 5.0, true)
-	for point in edge_points:
-		draw_circle(to_global(map_to_local(point)),3,Color.RED)
-	for point in inner_points:
-		draw_circle(to_global(map_to_local(point)),3,Color.BLUE)
-	for point in new_points:
-		draw_circle(to_global(map_to_local(point)),3,Color.AQUA)
-		
-
 #region npc生成
 func gen_at(cell:Vector2i,scene:PackedScene,appointed_parent:Node = self)->Node2D:
 	if not scene:
@@ -89,6 +65,9 @@ func after_player_move():
 func move_to(node:Node2D,desti:Vector2i):
 	node.position = map_to_local(desti)
 
+
+func can_player_move_to(desti:Vector2i)->bool:
+	return edges.has(point_to_edge(desti,player_cell))
 
 func refresh_inner_and_edges(global_view_rect:Rect2):
 	var next_edges:Dictionary[Vector2i,bool]
