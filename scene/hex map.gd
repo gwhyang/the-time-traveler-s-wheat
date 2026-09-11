@@ -6,8 +6,8 @@ class_name HexMap
 ## 场景上演出的数据
 
 func _input(event: InputEvent) -> void:
+	if Game.disable_move:return
 	if event.is_action_released("move"):
-		if Game.disable_move:return
 		var desti:= local_to_map(to_local(get_global_mouse_position()))
 		if desti == player_cell:return
 		player_move_to(desti)
@@ -251,6 +251,9 @@ class Component:
 	
 	func has_entity(id:int)->bool:
 		if id >= sparse_size:
+			return false
+		var dense_id:= sparse[id]
+		if dense_id >= dense.size():
 			return false
 		return dense[sparse[id]] == id
 	

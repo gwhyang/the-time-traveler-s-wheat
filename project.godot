@@ -25,7 +25,8 @@ directories/dch_directory={
 "character1": "res://Dialogue/characters/character1.dch"
 }
 directories/dtl_directory={
-"timeline": "res://Dialogue/timelines/timeline1.dtl"
+"timeline": "res://Dialogue/timelines/timeline1.dtl",
+"timeline2": "res://Dialogue/timelines/timeline2.dtl"
 }
 layout/style_directory={}
 glossary/default_case_sensitive=true
