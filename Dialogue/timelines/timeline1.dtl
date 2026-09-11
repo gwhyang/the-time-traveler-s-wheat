@@ -1,6 +1,5 @@
-[background arg="res://assets/background/屏幕截图 2026-09-10 232835.png" fade="0.0"]
 111111
-character1: aaa
+111111
 join character1 left [animation="Zoom In"]
 character1: 啊啊啊啊
 join character1 center

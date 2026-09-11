@@ -6,7 +6,7 @@ class_name HexMap
 ## 场景上演出的数据
 
 func _input(event: InputEvent) -> void:
-	if Game.disable_move:return
+	if !Game.game_mode==Game.GameMode.WALK:return
 	if event.is_action_released("move"):
 		var desti:= local_to_map(to_local(get_global_mouse_position()))
 		if desti == player_cell:return
@@ -222,7 +222,7 @@ func create_entity():
 	return id
 	
 func free_entity(id:int):
-	if has_entity(id):return
+	if not has_entity(id):return
 	var last_id:int = entity[-1]
 	sparse_entity[last_id] = sparse_entity[id]
 	entity[sparse_entity[id]] = last_id
@@ -265,7 +265,7 @@ class Component:
 		dense.append(id)
 		values.append(value)
 	
-	func entity_free(id:int):
+	func entity_free(id:int)->Variant:
 		var dense_index0:int = sparse[id]
 		var last_id:int = dense[-1]
 		
@@ -274,7 +274,7 @@ class Component:
 		values[dense_index0] = values[-1]
 		
 		dense.pop_back()
-		values.pop_back()
+		return values.pop_back()
 	
 	func value_id_all(value:Variant)->PackedInt32Array:
 		var res:PackedInt32Array
