@@ -125,6 +125,8 @@ func process_new_point_edge():
 	
 	weights = gen_edge_weights(new_edge_arr)
 	target_count = floori(new_edge_arr.size()*edge_spawn_chance)
+	if randf() < edge_spawn_chance-target_count:
+		target_count+=1
 	
 	for i in target_count:
 		index = rng.rand_weighted(weights)

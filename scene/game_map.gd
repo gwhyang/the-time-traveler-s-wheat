@@ -27,7 +27,6 @@ func _input(event: InputEvent) -> void:
 		if desti == player_cell:return
 		player_move_to(desti)
 
-
 func _process(delta: float) -> void:
 	queue_redraw()
 	var id :=posi_component.value_id_first(player_cell)
@@ -41,7 +40,6 @@ func _process(delta: float) -> void:
 				node.queue_free()
 		if index_component.has_entity(id):
 			Game.scene_flag |= 1<< index_component.entity_free(id)
-			print("scene_flag ",String.num_int64(Game.scene_flag,2))
 
 func after_player_move():
 	print("hints ",hint_component.dense)
@@ -49,6 +47,8 @@ func after_player_move():
 	# spawn npc
 	var points := new_points.duplicate()
 	var target_count := floori(points.size() *npc_spawn_chance)
+	if randf() < npc_spawn_chance-target_count:
+		target_count+=1
 	var id:int
 	
 	points.shuffle()
