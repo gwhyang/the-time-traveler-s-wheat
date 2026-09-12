@@ -113,13 +113,18 @@ func _cell_to_local(cell:Vector2i) -> Vector2:
 
 
 func _remove_out_of_view_delet_edges() -> bool:
-	var camera_rect := world_map.get_camera_rect()
+	var camera := get_viewport().get_camera_2d()
+	if camera == null:
+		return false
+	var viewport_size := get_viewport_rect().size / camera.zoom
+	var camera_center := to_local(camera.get_screen_center_position())
+	var visible_rect := Rect2(camera_center - viewport_size * 0.5, viewport_size)
 	var removed := false
 	for i in range(_delet_edges.size() - 1, -1, -1):
 		var edge_points:Array[Vector2i] = world_map.get_edge_points(_delet_edges[i])
-		var first_point := world_map.map_to_local(edge_points[0])
-		var second_point := world_map.map_to_local(edge_points[1])
-		if not camera_rect.has_point(first_point) and not camera_rect.has_point(second_point):
+		var first_point := _cell_to_local(edge_points[0])
+		var second_point := _cell_to_local(edge_points[1])
+		if (not visible_rect.has_point(first_point)) and (not visible_rect.has_point(second_point)):
 			_delet_edges.remove_at(i)
 			removed = true
 	return removed
