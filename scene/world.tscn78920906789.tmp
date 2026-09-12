@@ -1,0 +1,99 @@
+[gd_scene format=4 uid="uid://cs6ytpv5gmg1b"]
+
+[ext_resource type="Texture2D" uid="uid://cyg07y2x3qng1" path="res://assets/tilemap/hexagonAll_sheet.png" id="1_txmk2"]
+[ext_resource type="Script" uid="uid://cqmjwxkvf8smy" path="res://scene/game_map.gd" id="2_w4qq1"]
+[ext_resource type="Script" uid="uid://cket42q10u0nv" path="res://scene/path_painting.gd" id="3_m5mgf"]
+[ext_resource type="Script" uid="uid://bxeklppsjjev8" path="res://Class/tile_object.gd" id="3_oiypb"]
+[ext_resource type="Texture2D" uid="uid://dfio1gmy5hqq4" path="res://icon.svg" id="3_w4qq1"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b3k" path="res://Resource/c1.tres" id="4_a81yy"]
+[ext_resource type="Script" uid="uid://0821fg1gq1q2" path="res://scene/debug_display.gd" id="4_emkrx"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b31" path="res://Resource/t1.tres" id="5_qfj6m"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b32" path="res://Resource/t2.tres" id="6_n02kn"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b33" path="res://Resource/t3.tres" id="7_puhxk"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b34" path="res://Resource/t4.tres" id="8_x11oh"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b35" path="res://Resource/t5.tres" id="9_7h02s"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b36" path="res://Resource/t6.tres" id="10_fb6u6"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b37" path="res://Resource/t7.tres" id="11_spjrp"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b38" path="res://Resource/t8.tres" id="12_13g4d"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b4a" path="res://Resource/t9.tres" id="13_tl5qk"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b3a" path="res://Resource/t10.tres" id="14_lvrhu"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b3b" path="res://Resource/t11.tres" id="15_hb7oa"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b3c" path="res://Resource/t12.tres" id="16_qsqtq"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b3d" path="res://Resource/t13.tres" id="17_1f62m"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b3e" path="res://Resource/t14.tres" id="18_p8o2l"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b3f" path="res://Resource/t15.tres" id="19_mr18f"]
+[ext_resource type="Resource" uid="uid://b23ktyi5u0b3g" path="res://Resource/t16.tres" id="20_yadev"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5mgf"]
+texture = ExtResource("1_txmk2")
+separation = Vector2i(2, 2)
+texture_region_size = Vector2i(120, 140)
+0:12/0 = 0
+0:12/0/terrain_set = 0
+0:12/0/terrain = 1
+0:12/0/terrains_peering_bit/right_side = 1
+0:12/0/terrains_peering_bit/bottom_right_side = 1
+0:12/0/terrains_peering_bit/bottom_left_side = 1
+0:12/0/terrains_peering_bit/left_side = 1
+0:12/0/terrains_peering_bit/top_left_side = 1
+0:12/0/terrains_peering_bit/top_right_side = 1
+5:1/0 = 0
+5:1/0/terrain_set = 0
+5:1/0/terrain = 0
+5:1/0/terrains_peering_bit/right_side = 0
+5:1/0/terrains_peering_bit/bottom_right_side = 0
+5:1/0/terrains_peering_bit/bottom_left_side = 0
+5:1/0/terrains_peering_bit/left_side = 0
+5:1/0/terrains_peering_bit/top_left_side = 0
+5:1/0/terrains_peering_bit/top_right_side = 0
+7:6/0 = 0
+7:5/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+9:5/0 = 0
+4:7/0 = 0
+5:5/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_emkrx"]
+tile_shape = 3
+tile_size = Vector2i(120, 140)
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Terrain 0"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+terrain_set_0/terrain_1/name = "Terrain 1"
+terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
+sources/0 = SubResource("TileSetAtlasSource_m5mgf")
+
+[node name="World" type="Node2D" unique_id=768379252]
+
+[node name="world_map" type="TileMapLayer" parent="." unique_id=1607535154 node_paths=PackedStringArray("player")]
+unique_name_in_owner = true
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAUAAAAAAP//AAAFAAUAAAABAAAAAAAFAAUAAAAAAAEAAAAFAAUAAAD//wEAAAAFAAUAAAD//wAAAAAFAAUAAAD/////AAAFAAUAAAA=")
+tile_set = SubResource("TileSet_emkrx")
+script = ExtResource("2_w4qq1")
+npc_spawn_chance = 0.15
+dialgues = Array[ExtResource("3_oiypb")]([ExtResource("4_a81yy"), ExtResource("5_qfj6m"), ExtResource("6_n02kn"), ExtResource("7_puhxk"), ExtResource("8_x11oh"), ExtResource("9_7h02s"), ExtResource("10_fb6u6"), ExtResource("11_spjrp"), ExtResource("12_13g4d"), ExtResource("13_tl5qk"), ExtResource("14_lvrhu"), ExtResource("15_hb7oa"), ExtResource("16_qsqtq"), ExtResource("17_1f62m"), ExtResource("18_p8o2l"), ExtResource("19_mr18f"), ExtResource("20_yadev")])
+player = NodePath("../Sprite2D")
+
+[node name="path_painting" type="Node2D" parent="world_map" unique_id=902392242]
+script = ExtResource("3_m5mgf")
+line_pice_count = 5
+dash_ratio = 0.75
+noise1_x_scale = 10.0
+noise1_y_scale = 10.0
+noise2_x_scale = 1.0
+noise2_y_scale = 1.0
+noise1_frequency = 0.024
+
+[node name="debug_display" type="Node2D" parent="world_map" unique_id=318105889]
+visible = false
+script = ExtResource("4_emkrx")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1623943634]
+scale = Vector2(0.305, 0.305)
+texture = ExtResource("3_w4qq1")
+
+[node name="Camera2D" type="Camera2D" parent="Sprite2D" unique_id=2016095714]
+zoom = Vector2(1.87, 1.87)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0

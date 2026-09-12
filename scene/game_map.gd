@@ -1,4 +1,5 @@
 extends HexMap
+enum {normal,preending}
 @export_range(0.0, 1.0, 0.01) var npc_spawn_chance: float = 0.4
 @export var dialgues:Array[TileResource]
 
@@ -13,11 +14,23 @@ var index_component:Component =Component.new()
 
 var entity_to_free:Array[int]
 
-
+var presnting_stage:int = normal
 
 
 func _ready() -> void:
-	player_move_to(Vector2i.ZERO)
+	player.global_position = to_global(map_to_local(Vector2i.ZERO))
+	#TODO 完成这个 出场时候的路径-NPC是固定的那几个
+	refresh_inner_and_edges(get_camera_rect())
+	
+	# 写固定的地图
+	var fin_point:=Vector2i.ZERO
+	var teching_dialgues:Array[int] = [1,2,3,4]
+	while inner_points.has(fin_point) or not teching_dialgues.is_empty():
+		fin_point+= Vector2i.RIGHT
+		edges.append(point_to_edge(fin_point,fin_point-Vector2i.RIGHT))
+		apply_dialgue_at(teching_dialgues.pop_front(),fin_point)
+	
+	
 
 func _input(event: InputEvent) -> void:
 	if !Game.game_mode==Game.GameMode.WALK:return
@@ -60,10 +73,7 @@ func after_player_move():
 			i+=1
 			target_count+=1
 			continue
-		var object_id:= pick_object()
-		if object_id >=0:
-			var index:=apply_tile_resource(dialgues[object_id],cp)
-			index_component.entity_add(index,object_id)
+		apply_dialgue_at(pick_object(),cp)
 		i+=1
 	
 	# add delet queue
@@ -104,6 +114,13 @@ func custom_free_method(id:int):
 				node.queue_free()
 			#print("free2 ",id)
 			print(id," at ",c.dense)
+
+func apply_dialgue_at(index:int,posi:Vector2i)->int:
+	if index <0:return -1
+	var id =apply_tile_resource(dialgues[index],posi)
+	index_component.entity_add(id,index)
+	return id
+	
 
 func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 	var sprite:= Sprite2D.new()
