@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TileResource" format=3 uid="uid://b23ktyi5u0b31"]
+
+[ext_resource type="PackedScene" uid="uid://dqsm75dy13w3e" path="res://scene/hint/hint.tscn" id="1_q0ifu"]
+[ext_resource type="Script" uid="uid://bxeklppsjjev8" path="res://Class/tile_object.gd" id="2_8e3wv"]
+[ext_resource type="Texture2D" uid="uid://ctm3bat2d1sj4" path="res://assets/sprite/屏幕截图 2026-09-11 004410.png" id="3_0dns1"]
+
+[resource]
+script = ExtResource("2_8e3wv")
+tileline_name = "timeline"
+sprite = ExtResource("3_0dns1")
+hint = ExtResource("1_q0ifu")
+background = 1
+metadata/_custom_type_script = "uid://bxeklppsjjev8"

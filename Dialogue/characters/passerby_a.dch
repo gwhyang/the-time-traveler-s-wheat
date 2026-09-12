@@ -14,7 +14,7 @@
 &"description": "",
 &"display_name": "路人a",
 &"mirror": false,
-&"nicknames": [],
+&"nicknames": [""],
 &"offset": Vector2(0, 0),
 &"portraits": {},
 &"scale": 1.0
