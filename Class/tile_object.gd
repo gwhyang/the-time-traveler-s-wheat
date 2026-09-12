@@ -4,3 +4,4 @@ class_name TileResource
 @export var sprite:Texture2D
 @export var sprite_offset:Vector2
 @export var hint:PackedScene
+@export var background:Game.BackGround

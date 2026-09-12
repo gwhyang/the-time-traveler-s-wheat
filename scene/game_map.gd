@@ -1,5 +1,6 @@
 extends HexMap
 @export_range(0.0, 1.0, 0.01) var npc_spawn_chance: float = 0.4
+@export var dialgues:Array[TileResource]
 
 
 const C_1 = preload("uid://b23ktyi5u0b3k")
@@ -8,8 +9,12 @@ var timeline_component:Component = Component.new()
 var posi_component:Component = Component.new()
 var sprite_component:Component = Component.new()
 var hint_component:Component = Component.new()
+var index_component:Component =Component.new()
 
 var entity_to_free:Array[int]
+
+
+
 
 func _ready() -> void:
 	player_move_to(Vector2i.ZERO)
@@ -31,11 +36,12 @@ func _process(delta: float) -> void:
 			Dialogic.start(timeline_component.entity_find(id))
 			timeline_component.entity_free(id)
 		if hint_component.has_entity(id):
-			print(id)
 			var node:= hint_component.entity_free(id) as Node
 			if is_instance_valid(node) and not node.is_queued_for_deletion():
 				node.queue_free()
-			print(id," at ",hint_component.dense)
+		if index_component.has_entity(id):
+			Game.scene_flag |= 1<< index_component.entity_free(id)
+			print("scene_flag ",String.num_int64(Game.scene_flag,2))
 
 func after_player_move():
 	print("hints ",hint_component.dense)
@@ -54,7 +60,10 @@ func after_player_move():
 			i+=1
 			target_count+=1
 			continue
-		apply_tile_resource(C_1,cp)
+		var object_id:= pick_object()
+		if object_id >=0:
+			var index:=apply_tile_resource(dialgues[object_id],cp)
+			index_component.entity_add(index,object_id)
 		i+=1
 	
 	# add delet queue
@@ -68,12 +77,21 @@ func after_player_move():
 		print("free id ",id)
 		free_entity(id)
 
+func pick_object()->int:
+	var index:int = 0
+	while index < dialgues.size():
+		if (Game.scene_flag & (1<<index)) ==0 :
+			return index
+		index+=1
+	return -1
+
 func custom_free_method(id:int):
 	var components:Array[Component] = [
 		timeline_component,
 		posi_component,
 		sprite_component,
-		hint_component]
+		hint_component,
+		index_component]
 	var value:Variant
 	#print(id," is freed")
 	for c in components:
@@ -87,13 +105,13 @@ func custom_free_method(id:int):
 			#print("free2 ",id)
 			print(id," at ",c.dense)
 
-func apply_tile_resource(res:TileResource,cell:Vector2i):
+func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 	var sprite:= Sprite2D.new()
 	var hint:Node = gen_at(cell,res.hint)
 	
 	if not hint:
 		printerr("qwhoqw")
-		return
+		return -1
 	var id = create_entity()
 		
 	timeline_component.entity_add(id,res.tileline_name)
@@ -104,3 +122,4 @@ func apply_tile_resource(res:TileResource,cell:Vector2i):
 	sprite.texture = res.sprite
 	spawn_at(cell,sprite)
 	sprite.position+=res.sprite_offset
+	return id
