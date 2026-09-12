@@ -30,6 +30,7 @@ extends Node2D
 # 不要删除、改动这些说明语句
 
 var _original_point_groups:Array[PackedVector2Array] = []
+var _delet_edges:Array[Vector4i] = []
 var _last_edge_signature:int = 0
 var _has_edge_signature:bool = false
 
@@ -39,6 +40,7 @@ var _noise1_y := FastNoiseLite.new()
 
 func _ready() -> void:
 	_configure_noise()
+	world_map.player_moved.connect(_on_player_moved)
 	_refresh_original_point_groups()
 	queue_redraw()
 
@@ -46,8 +48,18 @@ func _ready() -> void:
 func _process(_delta:float) -> void:
 	if not is_instance_valid(world_map):
 		return
-	if _refresh_original_point_groups():
+	var redraw := _refresh_original_point_groups()
+	if _remove_out_of_view_delet_edges():
+		redraw = true
+	if redraw:
 		queue_redraw()
+
+
+func _on_player_moved() -> void:
+	for edge:Vector4i in world_map.delet_edges:
+		if not _delet_edges.has(edge):
+			_delet_edges.append(edge)
+	queue_redraw()
 
 
 func _configure_noise() -> void:
@@ -76,22 +88,23 @@ func _refresh_original_point_groups() -> bool:
 	_original_point_groups.clear()
 
 	var dash_count := maxi(line_pice_count, 1)
-	var point_count := dash_count * 2
 	for edge:Vector4i in world_map.edges:
-		var edge_points:Array[Vector2i] = world_map.get_edge_points(edge)
-		var from_cell:Vector2i = edge_points[0]
-		var to_cell:Vector2i = edge_points[1]
-		var from_point := _cell_to_local(from_cell)
-		var to_point := _cell_to_local(to_cell)
-		var point_group := PackedVector2Array()
-
-		for point_index in range(point_count + 1):
-			var amount := float(point_index) / float(point_count)
-			point_group.append(from_point.lerp(to_point, amount))
-
-		_original_point_groups.append(point_group)
+		_original_point_groups.append(_make_original_point_group(edge, dash_count * 2))
 
 	return true
+
+
+func _make_original_point_group(edge:Vector4i, point_count:int) -> PackedVector2Array:
+	var edge_points:Array[Vector2i] = world_map.get_edge_points(edge)
+	var from_point := _cell_to_local(edge_points[0])
+	var to_point := _cell_to_local(edge_points[1])
+	var point_group := PackedVector2Array()
+
+	for point_index in range(point_count + 1):
+		var amount := float(point_index) / float(point_count)
+		point_group.append(from_point.lerp(to_point, amount))
+
+	return point_group
 
 
 func _cell_to_local(cell:Vector2i) -> Vector2:
@@ -99,10 +112,28 @@ func _cell_to_local(cell:Vector2i) -> Vector2:
 	return to_local(world_map.to_global(map_local_point))
 
 
+func _remove_out_of_view_delet_edges() -> bool:
+	var camera_rect := world_map.get_camera_rect()
+	var removed := false
+	for i in range(_delet_edges.size() - 1, -1, -1):
+		var edge_points:Array[Vector2i] = world_map.get_edge_points(_delet_edges[i])
+		var first_point := world_map.map_to_local(edge_points[0])
+		var second_point := world_map.map_to_local(edge_points[1])
+		if not camera_rect.has_point(first_point) and not camera_rect.has_point(second_point):
+			_delet_edges.remove_at(i)
+			removed = true
+	return removed
+
+
 func _draw() -> void:
 	for original_points:PackedVector2Array in _original_point_groups:
 		var noisy_points := _make_noisy_points(original_points)
 		_draw_dashed_polyline(noisy_points)
+
+	var point_count := maxi(line_pice_count, 1) * 2
+	for edge:Vector4i in _delet_edges:
+		var original_points := _make_original_point_group(edge, point_count)
+		_draw_dashed_polyline(_make_noisy_points(original_points))
 	
 	# 显示可到达的格点
 	for neighbor in world_map.hex_neibghbors:
