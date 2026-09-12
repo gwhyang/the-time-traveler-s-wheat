@@ -1,7 +1,7 @@
 extends TileMapLayer
 class_name HexMap
 
-
+signal player_moved
 
 ## 场景上演出的数据
 
@@ -31,8 +31,10 @@ const hex_neibghbors:Array[TileSet.CellNeighbor] = [
 	TileSet.CELL_NEIGHBOR_TOP_LEFT_SIDE,
 	TileSet.CELL_NEIGHBOR_TOP_RIGHT_SIDE]
 @export_range(0.0, 1.0, 0.01) var edge_spawn_chance: float = 0.4
+@export var move_duration:float = 0.25
 @export var player:Node2D
 var player_cell:Vector2i
+var move_tween:Tween
 
 # 1. 直接生成边，然后根据边渲染点
 # 2. 生成时候不是直接每个边单独判断是否生成，而是在搜友的边中按照期望随机选取几个生成。其中也按照名额分配给：1. 与玩家相连的边 2，与NPC相连的边（至少一个） 3. 与已有边相连的边，剩下来的就真的随机抽取
@@ -40,6 +42,7 @@ var player_cell:Vector2i
 # 地图生成时，先根据摄像头找出来边界，每次移动也改变边界，并且根据边界判断是那些边应该重新生成
 var edged_points:Dictionary[Vector2i,bool]
 var edges:Array[Vector4i]
+var delet_edges:Array[Vector4i]
 var inner_points:Array[Vector2i]
 var delet_points:Array[Vector2i]
 var new_points:Array[Vector2i]
@@ -57,13 +60,17 @@ func player_move_to(desti:Vector2i):
 	delet_points = post_inner_cell.filter(func(c): return not inner_points.has(c))
 	process_new_point_edge()
 	process_delet_point_edge()
+	player_moved.emit()
 	after_player_move()
 
 func after_player_move():
 	pass
 
 func move_to(node:Node2D,desti:Vector2i):
-	node.position = map_to_local(desti)
+	if move_tween:
+		move_tween.kill()
+	move_tween = create_tween()
+	move_tween.tween_property(node,"position",map_to_local(desti),move_duration).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
 
 
 func can_player_move_to(desti:Vector2i)->bool:
@@ -135,12 +142,14 @@ func process_delet_point_edge():
 	edged_points={}
 	print("e",edges)
 	print("i",inner_points)
+	delet_edges = []
 	for i in range(edges.size()-1,-1,-1):
 		point_pair = get_edge_points(edges[i])
 		if (inner_points.has(point_pair[0]) or inner_points.has(point_pair[1])): 
 			edged_points[point_pair[0]] = true
 			edged_points[point_pair[1]] = true
 			continue
+		delet_edges.append(edges[i])
 		edges.remove_at(i)
 
 func gen_edge_weights(new_edge_arr:Array)->PackedFloat32Array:
