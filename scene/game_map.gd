@@ -12,6 +12,7 @@ var posi_component:Component = Component.new()
 var sprite_component:Component = Component.new()
 var hint_component:Component = Component.new()
 var index_component:Component =Component.new()
+var background_component:Component =Component.new()
 var posi_backgroud_override:Dictionary[Vector2i,Game.BackGround]
 
 var entity_to_free:Array[int]
@@ -24,6 +25,9 @@ var presnting_stage:int = normal
 
 
 func _ready() -> void:
+	Dialogic.timeline_ended.connect(Game.change_back_ground.bind(0))
+	
+	
 	player.global_position = to_global(map_to_local(Vector2i.ZERO))
 	refresh_inner_and_edges(get_camera_rect())
 	
@@ -64,7 +68,8 @@ func _process(delta: float) -> void:
 				node.queue_free()
 		if index_component.has_entity(id):
 			Game.scene_flag |= 1<< index_component.entity_free(id)
-
+		if background_component.has_entity(id):
+			Game.change_back_ground(background_component.entity_free(id))
 func after_player_move():
 	print("hints ",hint_component.dense)
 	print("free list ",free_list)
@@ -112,7 +117,8 @@ func custom_free_method(id:int):
 		posi_component,
 		sprite_component,
 		hint_component,
-		index_component]
+		index_component,
+		background_component]
 	var value:Variant
 	#print(id," is freed")
 	for c in components:
@@ -150,6 +156,7 @@ func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 	posi_component.entity_add(id,cell)
 	sprite_component.entity_add(id,sprite)
 	hint_component.entity_add(id,hint)
+	background_component.entity_add(id,res.background)
 	
 	sprite.texture = res.sprite
 	spawn_at(cell,sprite)
