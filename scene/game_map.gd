@@ -49,6 +49,7 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	queue_redraw()
+	process_background_overrides()
 	if move_tween:
 		if move_tween.is_running():
 			return
@@ -139,6 +140,11 @@ func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 		printerr("qwhoqw")
 		return -1
 	var id = create_entity()
+
+	if res.background == Game.BackGround.NONE:
+		posi_backgroud_override.erase(cell)
+	else:
+		posi_backgroud_override[cell] = res.background
 		
 	timeline_component.entity_add(id,res.tileline_name)
 	posi_component.entity_add(id,cell)
@@ -149,6 +155,36 @@ func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 	spawn_at(cell,sprite)
 	sprite.position+=res.sprite_offset
 	return id
+
+func process_background_overrides() -> void:
+	var camera := get_viewport().get_camera_2d()
+	if camera == null:
+		return
+
+	var viewport_size := get_viewport_rect().size / camera.zoom
+	var camera_rect := Rect2(to_local(camera.get_screen_center_position()) - viewport_size * 0.5, viewport_size)
+	var camera_polygon := PackedVector2Array([
+		camera_rect.position,
+		Vector2(camera_rect.end.x, camera_rect.position.y),
+		camera_rect.end,
+		Vector2(camera_rect.position.x, camera_rect.end.y),
+	])
+
+	for cell:Vector2i in posi_backgroud_override.keys():
+		if Geometry2D.intersect_polygons(get_hex_cell_points(cell), camera_polygon).is_empty():
+			posi_backgroud_override.erase(cell)
+
+func get_hex_cell_points(cell:Vector2i) -> PackedVector2Array:
+	var half_size := Vector2(tile_set.tile_size) * 0.5
+	var center := map_to_local(cell)
+	return PackedVector2Array([
+		center + Vector2(0.0, -half_size.y),
+		center + Vector2(half_size.x, -half_size.y * 0.5),
+		center + Vector2(half_size.x, half_size.y * 0.5),
+		center + Vector2(0.0, half_size.y),
+		center + Vector2(-half_size.x, half_size.y * 0.5),
+		center + Vector2(-half_size.x, -half_size.y * 0.5),
+	])
 
 func gen_edge_weights(new_edge_arr:Array)->PackedFloat32Array:
 	var result:PackedFloat32Array

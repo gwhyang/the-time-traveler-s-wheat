@@ -277,210 +277,6 @@ terrain_set_0/terrain_1/name = "Terrain 1"
 terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_m5mgf")
 
-[sub_resource type="Shader" id="Shader_lvrhu"]
-code = "shader_type canvas_item;
-
-uniform sampler2D based_on;
-uniform vec4 match_color = vec4(1);
-uniform float tolerance:hint_range(0.0, .30, 0.001) = 0.05;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
-
-void fragment() {
-	if(length(texture(based_on,UV) - match_color)>tolerance){
-		discard;
-	}
-	// Called for every pixel the material is visible on.
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_hb7oa"]
-viewport_path = NodePath("background_medium2")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qsqtq"]
-resource_local_to_scene = true
-shader = SubResource("Shader_lvrhu")
-shader_parameter/based_on = SubResource("ViewportTexture_hb7oa")
-shader_parameter/match_color = Vector4(0, 0, 0, 1)
-shader_parameter/tolerance = 0.05
-
-[sub_resource type="Shader" id="Shader_13g4d"]
-code = "shader_type canvas_item;
-
-uniform sampler2D based_on;
-uniform vec4 match_color = vec4(1);
-uniform float tolerance:hint_range(0.0, .30, 0.001) = 0.05;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
-
-void fragment() {
-	if(length(texture(based_on,UV) - match_color)>tolerance){
-		discard;
-	}
-	// Called for every pixel the material is visible on.
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_tl5qk"]
-viewport_path = NodePath("background_medium2")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lvrhu"]
-resource_local_to_scene = true
-shader = SubResource("Shader_13g4d")
-shader_parameter/based_on = SubResource("ViewportTexture_tl5qk")
-shader_parameter/match_color = Vector4(0.167, 0, 0, 1)
-shader_parameter/tolerance = 0.05
-
-[sub_resource type="Shader" id="Shader_1f62m"]
-code = "shader_type canvas_item;
-
-uniform sampler2D based_on;
-uniform vec4 match_color = vec4(1);
-uniform float tolerance:hint_range(0.0, .30, 0.001) = 0.05;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
-
-void fragment() {
-	if(length(texture(based_on,UV) - match_color)>tolerance){
-		discard;
-	}
-	// Called for every pixel the material is visible on.
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_p8o2l"]
-viewport_path = NodePath("background_medium2")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mr18f"]
-resource_local_to_scene = true
-shader = SubResource("Shader_1f62m")
-shader_parameter/based_on = SubResource("ViewportTexture_p8o2l")
-shader_parameter/match_color = Vector4(3.333, 0, 0, 1)
-shader_parameter/tolerance = 0.05
-
-[sub_resource type="Shader" id="Shader_qsqtq"]
-code = "shader_type canvas_item;
-
-uniform sampler2D based_on;
-uniform vec4 match_color = vec4(1);
-uniform float tolerance:hint_range(0.0, .30, 0.001) = 0.05;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
-
-void fragment() {
-	if(length(texture(based_on,UV) - match_color)>tolerance){
-		discard;
-	}
-	// Called for every pixel the material is visible on.
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_1f62m"]
-viewport_path = NodePath("background_medium2")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p8o2l"]
-resource_local_to_scene = true
-shader = SubResource("Shader_qsqtq")
-shader_parameter/based_on = SubResource("ViewportTexture_1f62m")
-shader_parameter/match_color = Vector4(0.5, 0, 0, 1)
-shader_parameter/tolerance = 0.05
-
-[sub_resource type="Shader" id="Shader_p8o2l"]
-code = "shader_type canvas_item;
-
-uniform sampler2D based_on;
-uniform vec4 match_color = vec4(1);
-uniform float tolerance:hint_range(0.0, .30, 0.001) = 0.05;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
-
-void fragment() {
-	if(length(texture(based_on,UV) - match_color)>tolerance){
-		discard;
-	}
-	// Called for every pixel the material is visible on.
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_mr18f"]
-viewport_path = NodePath("background_medium2")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yadev"]
-resource_local_to_scene = true
-shader = SubResource("Shader_p8o2l")
-shader_parameter/based_on = SubResource("ViewportTexture_mr18f")
-shader_parameter/match_color = Vector4(0.667, 0, 0, 1)
-shader_parameter/tolerance = 0.05
-
-[sub_resource type="Shader" id="Shader_1gmmm"]
-code = "shader_type canvas_item;
-
-uniform sampler2D based_on;
-uniform vec4 match_color = vec4(1);
-uniform float tolerance:hint_range(0.0, .30, 0.001) = 0.05;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
-
-void fragment() {
-	if(length(texture(based_on,UV) - match_color)>tolerance){
-		discard;
-	}
-	// Called for every pixel the material is visible on.
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_np4qc"]
-viewport_path = NodePath("background_medium2")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kof1m"]
-resource_local_to_scene = true
-shader = SubResource("Shader_1gmmm")
-shader_parameter/based_on = SubResource("ViewportTexture_np4qc")
-shader_parameter/match_color = Vector4(0.833, 0, 0, 1)
-shader_parameter/tolerance = 0.05
-
 [node name="World" type="Node2D" unique_id=768379252]
 
 [node name="backgrounds" type="CanvasLayer" parent="." unique_id=555025657]
@@ -547,6 +343,70 @@ grow_vertical = 2
 texture = ExtResource("31_lvrhu")
 expand_mode = 2
 
+[node name="backgrounds2" type="CanvasLayer" parent="." unique_id=845442487]
+layer = -1
+
+[node name="home" type="TextureRect" parent="backgrounds2" unique_id=1752445705]
+material = SubResource("ShaderMaterial_puhxk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("26_n02kn")
+expand_mode = 2
+
+[node name="street" type="TextureRect" parent="backgrounds2" unique_id=1446660020]
+material = SubResource("ShaderMaterial_7h02s")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("27_puhxk")
+expand_mode = 2
+
+[node name="classroom" type="TextureRect" parent="backgrounds2" unique_id=1170732380]
+material = SubResource("ShaderMaterial_13g4d")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("28_spjrp")
+expand_mode = 2
+
+[node name="corridor" type="TextureRect" parent="backgrounds2" unique_id=1521745416]
+material = SubResource("ShaderMaterial_hb7oa")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("29_13g4d")
+expand_mode = 2
+
+[node name="lake" type="TextureRect" parent="backgrounds2" unique_id=783817232]
+material = SubResource("ShaderMaterial_fb6u6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("30_tl5qk")
+expand_mode = 2
+
+[node name="lab" type="TextureRect" parent="backgrounds2" unique_id=837034166]
+z_index = -1
+material = SubResource("ShaderMaterial_1f62m")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("31_lvrhu")
+expand_mode = 2
+
 [node name="world_map" type="TileMapLayer" parent="." unique_id=1607535154 node_paths=PackedStringArray("player")]
 unique_name_in_owner = true
 tile_set = SubResource("TileSet_emkrx")
@@ -572,78 +432,11 @@ script = ExtResource("4_emkrx")
 
 [node name="Node2D" type="Node2D" parent="world_map" unique_id=1931691849]
 
-[node name="backgrounds2" type="CanvasLayer" parent="." unique_id=845442487]
-layer = 0
-
-[node name="home" type="TextureRect" parent="backgrounds2" unique_id=1752445705]
-material = SubResource("ShaderMaterial_qsqtq")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("26_n02kn")
-expand_mode = 2
-
-[node name="street" type="TextureRect" parent="backgrounds2" unique_id=1446660020]
-material = SubResource("ShaderMaterial_lvrhu")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("27_puhxk")
-expand_mode = 2
-
-[node name="classroom" type="TextureRect" parent="backgrounds2" unique_id=1170732380]
-material = SubResource("ShaderMaterial_mr18f")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("28_spjrp")
-expand_mode = 2
-
-[node name="corridor" type="TextureRect" parent="backgrounds2" unique_id=1521745416]
-material = SubResource("ShaderMaterial_p8o2l")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("29_13g4d")
-expand_mode = 2
-
-[node name="lake" type="TextureRect" parent="backgrounds2" unique_id=783817232]
-material = SubResource("ShaderMaterial_yadev")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("30_tl5qk")
-expand_mode = 2
-
-[node name="lab" type="TextureRect" parent="backgrounds2" unique_id=837034166]
-z_index = -1
-material = SubResource("ShaderMaterial_kof1m")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("31_lvrhu")
-expand_mode = 2
-
 [node name="background_medium" type="SubViewport" parent="." unique_id=1047935609]
 size = Vector2i(1152, 648)
 
 [node name="Camera2D" type="Camera2D" parent="background_medium" unique_id=975863188]
 zoom = Vector2(1.87, 1.87)
-
-[node name="color_division" type="Node2D" parent="background_medium" unique_id=753979188]
-script = ExtResource("22_qfj6m")
 
 [node name="VoronoiPointEmmitor" type="Node2D" parent="background_medium" unique_id=1772011768]
 unique_name_in_owner = true
@@ -653,6 +446,9 @@ radius_range = Vector2(0.24, 0.52)
 move_speed = Vector2(10, 1)
 create_interval = 0.2
 metadata/_custom_type_script = "uid://olmjhh7l8md7"
+
+[node name="color_division" type="Node2D" parent="background_medium" unique_id=753979188]
+script = ExtResource("22_qfj6m")
 
 [node name="background_medium2" type="SubViewport" parent="." unique_id=913939938]
 size = Vector2i(1152, 648)

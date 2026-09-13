@@ -1,13 +1,18 @@
 extends VoronoiDivision
+class_name VoronoiEmitor
 
-const sceen_dot_index:float = 80.0/6/6/0.2/3.5
+const sceen_dot_index:float = 100.0*6*6*0.2/3.5
+const min_count:int = 40
 
 @export var angular_speed_range:Vector2
 @export var radius_range:Vector2
 @export var move_speed:Vector2
 @export var create_interval:float = 0.5
 @export var create_count_range:Vector2i = Vector2i(2,5)
-@export var seted_color:int = 0#0是没确定的意思
+@export var seted_color:int = 0:#0是没确定的意思
+	set(v):
+		seted_color = v
+		change_index =0
 var create_count_down:float = 0
 var indexes:Array[int]
 var polar_points:Component = Component.new()
@@ -15,22 +20,30 @@ var radii:Component = Component.new()
 var angulur:Component = Component.new()
 var color:Component = Component.new()
 var angulur_speed:Component = Component.new()
+var polygons:Array[PackedVector2Array]
 
 var slice:float
 var max_point_count:int
-
+var change_index:int
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	queue_redraw()
-	max_point_count = sceen_dot_index*create_interval*move_speed.x*move_speed.x*0.5*(create_count_range.x+create_count_range.y)
+	max_point_count = sceen_dot_index/create_interval/(move_speed.x*move_speed.x)*0.5*(create_count_range.x+create_count_range.y)
+	max_point_count = maxi(max_point_count,min_count)
+	#print(sceen_dot_index)
+	#print(max_point_count)
 	create_count_down -= delta
 	if create_count_down <= 0:
 		create_count_down = create_interval
 		var create_count:= randi_range(create_count_range.x,create_count_range.y)
 		var diff:float = TAU*randf()
 		slice = TAU/create_count
+		if seted_color!=0:
+			change_index+=create_count
+		else :
+			change_index-= create_count
 		for i in create_count:
 			indexes.append(add_point(0.02,diff+i*slice))
 	deal_points(delta)
@@ -40,7 +53,6 @@ func deal_points(delta:float):
 	var count:int = maxi(indexes.size() - max_point_count, 0)
 	for i in count:
 		free_entity(indexes.pop_front())
-	
 	for id in indexes:
 		polar_points.entity_set(id,polar_points.entity_find(id)+move_speed*delta)
 		angulur.entity_set(id,angulur.entity_find(id)+angulur_speed.entity_find(id)*delta)
@@ -57,8 +69,11 @@ func _draw() -> void:
 		posi = polar2eulur(polar_posi)+polar2eulur(
 			Vector2(radii.entity_find(i),angulur.entity_find(i)))
 		points.append(to_global(posi))
-	var polygons:= get_voronoi_polygons(points)
-	for i in indexes.size():
+		
+	polygons= get_voronoi_polygons(points)
+	var index_size:=indexes.size()
+	for i in index_size:
+		if i+change_index >= index_size:return
 		if polygons[i].is_empty():
 			continue
 		var local_polygon := PackedVector2Array()
