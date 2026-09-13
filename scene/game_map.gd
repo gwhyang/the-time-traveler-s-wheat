@@ -1,4 +1,5 @@
 extends HexMap
+class_name GameMap
 enum {normal,preending}
 @export_range(0.0, 1.0, 0.01) var npc_spawn_chance: float = 0.4
 @export var dialgues:Array[TileResource]
@@ -11,10 +12,15 @@ var posi_component:Component = Component.new()
 var sprite_component:Component = Component.new()
 var hint_component:Component = Component.new()
 var index_component:Component =Component.new()
+var posi_backgroud_override:Dictionary[Vector2i,int]
 
 var entity_to_free:Array[int]
 
 var presnting_stage:int = normal
+@export_group("edge spawn weights")
+@export_range(0.0, 1.0, 0.01) var connect_weight:float = 0.2
+@export_range(0.0, 1.0, 0.01) var player_fetch_weight:float = 0.15
+@export_range(0.0, 1.0, 0.01) var npc_fetch_weight:float = 0.1
 
 
 func _ready() -> void:
@@ -25,10 +31,12 @@ func _ready() -> void:
 	# 写固定的地图
 	var fin_point:=Vector2i.ZERO
 	var teching_dialgues:Array[int] = [1,2,3,4]
+	#teching_dialgues.clear()
 	while inner_points.has(fin_point) or not teching_dialgues.is_empty():
 		fin_point+= Vector2i.RIGHT
 		edges.append(point_to_edge(fin_point,fin_point-Vector2i.RIGHT))
-		apply_dialgue_at(teching_dialgues.pop_front(),fin_point)
+		if not teching_dialgues.is_empty():
+			apply_dialgue_at(teching_dialgues.pop_front(),fin_point)
 	
 	
 
@@ -36,12 +44,15 @@ func _input(event: InputEvent) -> void:
 	if !Game.game_mode==Game.GameMode.WALK:return
 	if event.is_action_released("move"):
 		var desti:= local_to_map(to_local(get_global_mouse_position()))
-		if not can_player_move_to(desti):return
+		#if not can_player_move_to(desti):return
 		if desti == player_cell:return
 		player_move_to(desti)
 
 func _process(delta: float) -> void:
 	queue_redraw()
+	if move_tween:
+		if move_tween.is_running():
+			return
 	var id :=posi_component.value_id_first(player_cell)
 	if id>=0:
 		if timeline_component.has_entity(id):
@@ -120,7 +131,6 @@ func apply_dialgue_at(index:int,posi:Vector2i)->int:
 	var id =apply_tile_resource(dialgues[index],posi)
 	index_component.entity_add(id,index)
 	return id
-	
 
 func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 	var sprite:= Sprite2D.new()
@@ -140,3 +150,20 @@ func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 	spawn_at(cell,sprite)
 	sprite.position+=res.sprite_offset
 	return id
+
+func gen_edge_weights(new_edge_arr:Array)->PackedFloat32Array:
+	var result:PackedFloat32Array
+	result.resize(new_edge_arr.size())
+	result.fill(1)
+	print("new edge size: ",new_edge_arr.size())
+	var points:Array[Vector2i]
+	for i in new_edge_arr.size():
+		points = get_edge_points(new_edge_arr[i])
+		for p in points:
+			if p in edged_points: result[i] += connect_weight
+			for cell:Vector2i in posi_component.values:
+				if points_graph_distance(cell,p)>0:
+					result[i]+= npc_fetch_weight
+			if points_graph_distance(player_cell,p)>0:
+				result[i]+=player_fetch_weight
+	return result

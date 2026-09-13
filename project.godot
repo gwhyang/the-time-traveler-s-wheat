@@ -46,6 +46,7 @@ directories/dtl_directory={
 "timeline16": "res://Dialogue/timelines/timeline16.dtl",
 "timeline2": "res://Dialogue/timelines/timeline2.dtl",
 "timeline3": "res://Dialogue/timelines/timeline3.dtl",
+"timeline3-1": "res://Dialogue/timelines/timeline3-1.dtl",
 "timeline4": "res://Dialogue/timelines/timeline4.dtl",
 "timeline5": "res://Dialogue/timelines/timeline5.dtl",
 "timeline6": "res://Dialogue/timelines/timeline6.dtl",
@@ -89,8 +90,11 @@ audio/channel_defaults={
 }
 variables={
 "a": false,
-"b": false
+"b": false,
+"choice_finish_count": 0
 }
+layout/style_list=[]
+layout/default_style="Default"
 
 [display]
 

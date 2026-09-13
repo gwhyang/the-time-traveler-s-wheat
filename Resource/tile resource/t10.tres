@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="TileResource" format=3 uid="uid://b23ktyi5u0b34"]
+[gd_resource type="Resource" script_class="TileResource" format=3 uid="uid://b23ktyi5u0b3a"]
 
-[ext_resource type="Script" uid="uid://bxeklppsjjev8" path="res://Class/tile_object.gd" id="1_gwex3"]
+[ext_resource type="Script" uid="uid://bxeklppsjjev8" path="res://scripts/tile_object.gd" id="1_gwex3"]
 [ext_resource type="PackedScene" uid="uid://dqsm75dy13w3e" path="res://scene/hint/hint.tscn" id="1_wgtnn"]
 [ext_resource type="Texture2D" uid="uid://ctm3bat2d1sj4" path="res://assets/sprite/屏幕截图 2026-09-11 004410.png" id="2_g6f2x"]
 
 [resource]
 script = ExtResource("1_gwex3")
-tileline_name = "timeline4"
+tileline_name = "timeline10"
 sprite = ExtResource("2_g6f2x")
 hint = ExtResource("1_wgtnn")
-background = 6
+background = 5
 metadata/_custom_type_script = "uid://bxeklppsjjev8"

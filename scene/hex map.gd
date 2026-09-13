@@ -168,7 +168,96 @@ func get_camera_rect() -> Rect2:
 	var camera_center := map_to_local(player_cell)
 	var visible_rect := Rect2(camera_center - viewport_size * 0.5, viewport_size)
 	return visible_rect
+## 0: not connected
+func points_graph_distance(p1:Vector2i,p2:Vector2i)->int:
+	if p1 == p2:
+		return 0
 
+	var distance:int = 0
+	var visited:Dictionary[Vector2i,bool] = {}
+	var current_points:Array[Vector2i] = [p1]
+	visited[p1] = true
+
+	while not current_points.is_empty():
+		distance += 1
+		var next_points:Array[Vector2i] = []
+		for p:Vector2i in current_points:
+			for neighbor in hex_neibghbors:
+				var neighbor_cell := get_neighbor_cell(p,neighbor)
+				if visited.has(neighbor_cell): continue
+				if not edges.has(point_to_edge(p,neighbor_cell)): continue
+				if neighbor_cell == p2: return distance
+				visited[neighbor_cell] = true
+				next_points.append(neighbor_cell)
+		current_points = next_points
+	return 0
+
+func points_graph_path(p1:Vector2i,p2:Vector2i)->Array[Vector2i]:
+	var done:int = 0
+	var remain_edges:=edges.duplicate()
+	var using_points1:Array[Vector2i] = [p1]
+	var using_points2:Array[Vector2i] = [p2]
+	var temp_points:Array[Vector2i]
+	var index:int = 0
+	var neighbor_cell:Vector2i
+	var dict_parent:Dictionary[Vector2i,Vector2i]
+	var p:Vector2i
+	var q:Vector2i
+	while not remain_edges.is_empty():
+		if done>=1:break
+		
+		temp_points.clear()
+		for a in using_points1:
+			p=a
+			if done>=1:break
+			for neighbor in hex_neibghbors:
+				if done>=1:break
+				neighbor_cell = get_neighbor_cell(p,neighbor)
+				index = edges.find(point_to_edge(p,neighbor_cell))
+				if index<0:continue
+				if dict_parent.has(neighbor_cell):
+					done = 1
+					break
+				edges.remove_at(index)
+				dict_parent[neighbor_cell] = p
+				temp_points.append(neighbor_cell)
+		using_points1 = temp_points
+				
+		
+		temp_points.clear()
+		for a in using_points2:
+			q=a
+			if done>=1:break
+			for neighbor in hex_neibghbors:
+				if done>=1:break
+				neighbor_cell = get_neighbor_cell(p,neighbor)
+				index = edges.find(point_to_edge(p,neighbor_cell))
+				if index<0:continue
+				if dict_parent.has(neighbor_cell):
+					done = 2
+					break
+				edges.remove_at(index)
+				dict_parent[neighbor_cell] = p
+				temp_points.append(neighbor_cell)
+		using_points2 = temp_points
+	
+	if not done:return []
+	using_points1.clear()
+	using_points2.clear()
+	if done == 1:
+		q = neighbor_cell
+	else: p= neighbor_cell
+	
+	while p!=p1:
+		using_points1.append(p)
+		p = dict_parent[p]
+	while q!= p2:
+		using_points2.append(q)
+		q = dict_parent[q]
+	using_points1.reverse()
+	using_points1.append_array(using_points2)
+	return using_points1
+	
 func get_edge_points(pair:Vector4i)->Array[Vector2i]:
 	return [Vector2i(pair.x,pair.y),Vector2i(pair.z,pair.w)]
 
@@ -188,13 +277,13 @@ func point_to_edge(p1:Vector2i,p2:Vector2i)->Vector4i:
 #endregion
 
 #region ecs
-
+#TODO 应该改成 get set这样的，然后函数名不同的部分放前面
 var max_id:int = 0
 var entity_size:int = 0
 var entity:Array[int]
 var free_list:Array[int]
 var sparse_entity:PackedInt32Array
-func create_entity():
+func create_entity()->int:
 	var id:int
 	if not free_list.is_empty():
 		id = free_list.pop_back()
@@ -282,5 +371,4 @@ class Component:
 			if values[i] == value:
 				return dense[i]
 		return -1
-
 #endregion
