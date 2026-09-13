@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cjkwubpn4o551"]
+
+[ext_resource type="Script" uid="uid://rqta38tbd4eo" path="res://addons/soundmanager/Global/sound_manger.gd" id="1_j3ix2"]
+
+[node name="SoundManager" type="Node" unique_id=706504156]
+process_mode = 3
+script = ExtResource("1_j3ix2")
+
+[node name="SFX" type="Node" parent="." unique_id=1588597225]
+
+[node name="Music" type="Node" parent="." unique_id=877576683]
