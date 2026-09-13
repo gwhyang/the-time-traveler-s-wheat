@@ -1,10 +1,19 @@
 熟悉的感觉再一次到来。
 你又一次穿越走了。
+join reporter center
+join npc_d right
+join npc_e rightmost
+join kai left
 你来到街边，一群人围在一团。
 
 reporter: 现在是2028年5月29日，我在现场进行报道...
 npc_d: 可怜的孩子…还这么年轻…怎么就死了呢……
 npc_e: 是啊，她家人该多伤心…
+update kai rightmost [move_time="0.2"]
+[wait time="0.3"]
+update reporter leftmost [move_time="0.1"]
+update npc_d left [move_time="0.1"]
+update npc_e center [move_time="0.1"]
 
 你挤到群众前面。
 尽管躺在中央的人已经血肉模糊，但你仍然一眼就认了出来。

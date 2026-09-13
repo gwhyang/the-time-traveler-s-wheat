@@ -1,28 +1,42 @@
-[background arg="res://assets/background/教室.png" fade="0.0"]
 你看了一眼教室的表，表上写着时间：2026年9月17日
+join teacher center
 
 teacher: 为什么你现在才来？
+update teacher right
+join kai right
 teacher: 介绍一下，这是我们班新来的同学，凯。
 teacher: 赶紧去找个地方坐着吧。
 
-这里应该是有很多座位，但是跟其他npc交互的时候，npc会说不让坐。
-classmate: 「这里有人了。」
-classmate: 「换个位置去。」
-classmate: 「……别在这。」
-
-主角看向最后一排的夏洛蒂。
+这里有很多座位
+label 1
+- 同学A
+	classmate: 「这里有人了。」
+	set {choice_finish_count} += 1.0
+- 同学B
+	classmate: 「换个位置去。」
+	set {choice_finish_count} += 1.0
+- 同学C
+	classmate: 「……别在这。」
+	set {choice_finish_count} += 1.0
+- 夏洛蒂 | [if {choice_finish_count} >= 1.0]
+	
+	你看向最后一排的夏洛蒂。
+	jump 2
+jump 1
+label 2
 charlotte: 你可以坐到我这里。
 kai: 谢谢。
 charlotte: 你去哪里了？
-kai: 未来，有人要发明时光机。
-charlotte: （笑）
+kai: 未来[pause = 0.7]，有人要发明时光机。
+[wait time="0.4"]
+# 这里变成笑的
+[wait_input]
 charlotte: 他成功了吗？
 kai: 我不知道，管他呢？
 charlotte: 如果他成功了，记得告诉我一声，我想去看看。
-
-主角来到走廊。
+do Game.change_back_ground(4)
 走廊上有一个门。
-主角靠近门听到对话。
+你靠近门听到对话。
 
 classmate: 「怪胎和怪胎一起玩！」
 charlotte: 「那又怎么样？」

@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 
 Dialogic="*uid://ds2q0uclmolvu"
 Game="*uid://d2w4afnaqvsa"
+SoundManager="*uid://cjkwubpn4o551"
 
 [dialogic]
 
@@ -103,7 +104,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/soundmanager/plugin.cfg")
 
 [input]
 

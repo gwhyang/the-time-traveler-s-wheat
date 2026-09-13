@@ -1,14 +1,20 @@
-两个交谈的路人npc：
+join passerby_a left
+join passerby_b right
 passerby_a: 听说过吗，这个街道上曾经还死过两个人。
 passerby_b: 啊，还有这件事？
 passerby_a: 对啊，还很出名呢！
-
-路人npc
+leave passerby_a
+leave passerby_b
+join passerby_c center
 passerby_c: 听网上说就是这里啊，曾经有人高价收购了机器，在研发神秘装置....好好奇...
+leave passerby_c
+join reporter right
 
 reporter: 现在是2067年6月9日.....我正位于新贝街..据说，是一个传奇街道。
 reporter: 您好，可以采访一下你吗？
+join kai left
 reporter: 请问你如何看待网上的传言，说这个街道曾经有人高价收购了科研机器，要研究时光机的那条。
+[wait_input]
 - 1.我对此不感兴趣
 - 2.这种像是谣言
 - 3.可能是真的吧

@@ -1,3 +1,5 @@
+join charlotte right
+join kai left
 charlotte: 你是怎么知道这里的？这可是我的秘密基地。
 kai: 现在是...什么时间？
 charlotte: 3点半，2026年9月18日的三点半，有什么事吗？
@@ -13,18 +15,22 @@ charlotte: 他们早就对我这样了。
 kai: 什么？
 charlotte: 嗯，有一天来了一个年轻老师，他们取笑她…我回击他们的方式有点…
 charlotte: 随便吧，但是我要换个秘密基地了。
+leave charlotte
 kai: 等下！
+join charlotte right
 charlotte: 怎么？
 kai: 如果是我的话...我可能做的也会很糟糕。
 charlotte: 我做的不糟糕..你会做什么？
 kai: 呃，你相信我会穿越到过去吗？
 charlotte: 那得看你穿越回去要做什么。
 kai: 偷走他们的作业，模仿他们的笔记写道歉信...
-夏洛蒂大笑。
+# 夏洛蒂笑效果加一下
 charlotte: 这确实很糟糕！
-kai: （笑）：是呀...还有一件糟糕的事。
+# kai笑
+kai: 是呀...还有一件糟糕的事。
+# 恢复了
 charlotte: 我不打算换秘密基地了。
 kai: 是两人份的小组作业，你知道怎么完成它吗？
 charlotte: 你知道吗，我曾经见过你。
 kai: 什么？
-charlotte: （笑起来）：没什么，你想和我一起完成小组作业吗？
+charlotte: 没什么，你想和我一起完成小组作业吗？
