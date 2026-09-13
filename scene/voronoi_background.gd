@@ -1,7 +1,7 @@
 extends VoronoiDivision
 class_name VoronoiEmitor
 
-const sceen_dot_index:float = 100.0*6*6*0.2/3.5
+const sceen_dot_index:float = 140.0*6*6*0.2/3.5
 const min_count:int = 40
 enum RenderTarget { BACKGROUND, OVERRIDER }
 

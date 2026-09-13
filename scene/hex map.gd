@@ -366,6 +366,9 @@ class Component:
 				res.append(dense[i])
 		return res
 	
+	func entity_set(id:int,value:Variant):
+		if not has_entity(id):return
+		values[sparse[id]] = value
 	func value_id_first(value:Variant)->int:
 		for i in dense.size():
 			if values[i] == value:

@@ -7,6 +7,9 @@ extends Node2D
 #noise2_x/y_scale  随机抖动幅度
 #noise1_seed       Perlin 噪声种子
 #noise2_seed       随机噪声种子
+@export_group("seed change properties")
+@export var timer_time_range:Vector2 = Vector2(1,3)
+@export var mega_chage_range:Vector2i = Vector2i(2,4)
 @export_group("line properties")
 @export var line_color:Color = Color(0.35, 0.9, 0.68, 1.0)
 @export_range(0.5, 20.0, 0.5) var line_width:float = 3.0
@@ -24,10 +27,13 @@ extends Node2D
 @export var noise2_seed:int = 20260912
 
 @onready var world_map: HexMap = %world_map
+@onready var timer: Timer = $Timer
 
 # 根据worldmap中储存的边来生成虚线点组，渲染前根据点组的原始坐标，生成一个新的应用噪音后的点组，依据这个画虚线以有一些手绘的歪歪扭扭的效果
 # 暂定noise1 x y 都是 平滑的柏林噪声，noise2是随机噪声
 # 不要删除、改动这些说明语句
+
+var mega_change_countdown:int = 3
 
 var _original_point_groups:Array[PackedVector2Array] = []
 var _delet_edges:Array[Vector4i] = []
@@ -36,6 +42,7 @@ var _has_edge_signature:bool = false
 
 var _noise1_x := FastNoiseLite.new()
 var _noise1_y := FastNoiseLite.new()
+
 
 
 func _ready() -> void:
@@ -200,3 +207,12 @@ func _draw_dashed_polyline(points:PackedVector2Array) -> void:
 		var to_point := points[interval_end]
 		var dash_end := from_point.lerp(to_point, dash_ratio_clamped)
 		draw_line(from_point, dash_end, line_color, line_width, antialiased)
+
+
+func _on_timer_timeout() -> void:
+	mega_change_countdown -= 1
+	if mega_change_countdown == 0:
+		mega_change_countdown = randi_range(mega_chage_range.x,mega_chage_range.y)
+		noise1_seed+=200
+	noise2_seed+=200
+	timer.start(randf_range(timer_time_range.x,timer_time_range.y))

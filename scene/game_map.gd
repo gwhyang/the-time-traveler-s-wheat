@@ -1,9 +1,9 @@
 extends HexMap
 class_name GameMap
-enum {normal,preending}
+enum {normal,preending,end}
 @export_range(0.0, 1.0, 0.01) var npc_spawn_chance: float = 0.4
 @export var dialgues:Array[TileResource]
-
+@export var end_presenting_dialgues:Array[TileResource]
 
 const C_1 = preload("uid://b23ktyi5u0b3k")
 
@@ -17,7 +17,10 @@ var posi_backgroud_override:Dictionary[Vector2i,Game.BackGround]
 
 var entity_to_free:Array[int]
 
+var end_special_id:int = -1
+
 var presnting_stage:int = normal
+var boss_waiting:bool = false
 @export_group("edge spawn weights")
 @export_range(0.0, 1.0, 0.01) var connect_weight:float = 0.2
 @export_range(0.0, 1.0, 0.01) var player_fetch_weight:float = 0.15
@@ -33,7 +36,7 @@ func _ready() -> void:
 	
 	# 写固定的地图
 	var fin_point:=Vector2i.ZERO
-	var teching_dialgues:Array[int] = [1,2,3,4]
+	var teching_dialgues:Array[int] #= [1,2,3,4]
 	#teching_dialgues.clear()
 	while inner_points.has(fin_point) or not teching_dialgues.is_empty():
 		fin_point+= Vector2i.RIGHT
@@ -45,18 +48,23 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if !Game.game_mode==Game.GameMode.WALK:return
+	if boss_waiting:return
 	if event.is_action_released("move"):
 		var desti:= local_to_map(to_local(get_global_mouse_position()))
-		#if not can_player_move_to(desti):return
+		if not can_player_move_to(desti):return
 		if desti == player_cell:return
 		player_move_to(desti)
 
 func _process(delta: float) -> void:
+	
 	queue_redraw()
 	process_background_overrides()
 	if move_tween:
+		print("tween using")
 		if move_tween.is_running():
+			print("tween running")
 			return
+	print(boss_waiting)
 	var id :=posi_component.value_id_first(player_cell)
 	if id>=0:
 		if timeline_component.has_entity(id):
@@ -66,10 +74,26 @@ func _process(delta: float) -> void:
 			var node:= hint_component.entity_free(id) as Node
 			if is_instance_valid(node) and not node.is_queued_for_deletion():
 				node.queue_free()
+				
 		if index_component.has_entity(id):
-			Game.scene_flag |= 1<< index_component.entity_free(id)
+			Game.scene_flag |= 1 << index_component.entity_free(id)
+			
 		if background_component.has_entity(id):
 			Game.change_back_ground(background_component.entity_free(id))
+		if (Game.scene_flag & 1 << (dialgues.size()-1))>0:
+			presnting_stage = preending
+		if (Game.scene_flag & 1 << (dialgues.size()-1+end_presenting_dialgues.size()-1))>0:
+			presnting_stage = end
+		
+		if id == end_special_id:
+			boss_waiting = true
+			await Dialogic.timeline_ended
+			boss_waiting = false
+			var dirs:int = hex_neibghbors.pick_random()
+			if dirs<3: dirs = hex_neibghbors.pick_random()
+			apply_dialgue_at(pick_object(),get_neighbor_cell(player_cell,dirs))
+		
+		
 func after_player_move():
 	print("hints ",hint_component.dense)
 	print("free list ",free_list)
@@ -80,17 +104,23 @@ func after_player_move():
 		target_count+=1
 	var id:int
 	
+	
 	points.shuffle()
 	var i :int = 0
-	while i < target_count:
-		if i >= points.size():break
-		var cp :Vector2i= points[i]
-		if posi_component.value_id_first(cp)>=0:
+	if not presnting_stage == preending:
+		while i < target_count:
+			if i >= points.size():break
+			var cp :Vector2i= points[i]
+			if posi_component.value_id_first(cp)>=0:
+				i+=1
+				target_count+=1
+				continue
+			apply_dialgue_at(pick_object(),cp)
 			i+=1
-			target_count+=1
-			continue
-		apply_dialgue_at(pick_object(),cp)
-		i+=1
+	elif end_special_id<0:
+		end_special_id = apply_dialgue_at(pick_object(),points[i])
+		print("end_special_id ",end_special_id)
+	print("current esi ",end_special_id)
 	
 	# add delet queue
 	print("delet points ",delet_points)
@@ -101,12 +131,26 @@ func after_player_move():
 		#delet_points.append(id)
 		print("free posi",cell)
 		print("free id ",id)
+		if id == end_special_id:
+			print("ahhdaohdouadgp")
+			apply_dialgue_at(pick_object(),move_toward1(cell,player_cell))
+			continue
 		free_entity(id)
+ 
+func move_toward1(from:Vector2i,to:Vector2i)->Vector2i:
+	var dir:= Vector2(to-from)
+	dir = dir.normalized() * tile_set.tile_size.length()*0.5
+	return local_to_map(map_to_local(from)+dir)
 
 func pick_object()->int:
 	var index:int = 0
-	while index < dialgues.size():
+	var size:int = dialgues.size()
+	if presnting_stage == preending:
+		size+= end_presenting_dialgues.size()
+	while index < size:
 		if (Game.scene_flag & (1<<index)) ==0 :
+			print("Game.scene_flag ",String.num_int64(Game.scene_flag,2))
+			print("index ",index)
 			return index
 		index+=1
 	return -1
@@ -134,13 +178,38 @@ func custom_free_method(id:int):
 
 func apply_dialgue_at(index:int,posi:Vector2i)->int:
 	if index <0:return -1
+	if presnting_stage == preending:
+		var id = apply_tile_resource(end_presenting_dialgues[index-dialgues.size()],posi)
+		if end_special_id<0:
+			index_component.entity_add(id,index)
+		else :
+			index_component.entity_set(id,index)
+		return id
 	var id =apply_tile_resource(dialgues[index],posi)
 	index_component.entity_add(id,index)
 	return id
 
 func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
-	var sprite:= Sprite2D.new()
 	var hint:Node = gen_at(cell,res.hint)
+	if presnting_stage == preending and (end_special_id >=0):
+		timeline_component.entity_add(end_special_id,res.tileline_name)
+		
+		if res.background == Game.BackGround.NONE:
+			posi_backgroud_override.erase(cell)
+		else:
+			posi_backgroud_override[cell] = res.background
+		timeline_component.entity_add(end_special_id,res.tileline_name)
+		posi_component.entity_set(end_special_id,cell)
+		sprite_component.entity_find(end_special_id)
+		hint_component.entity_add(end_special_id,hint)
+		background_component.entity_add(end_special_id,res.background)
+		
+		move_to(sprite_component.entity_find(end_special_id),cell)
+		sprite_component.entity_find(end_special_id).position+=res.sprite_offset
+		return end_special_id
+		
+		
+	var sprite:= Sprite2D.new()
 	
 	if not hint:
 		printerr("qwhoqw")
