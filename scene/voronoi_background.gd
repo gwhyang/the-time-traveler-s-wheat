@@ -3,18 +3,17 @@ class_name VoronoiEmitor
 
 const sceen_dot_index:float = 100.0*6*6*0.2/3.5
 const min_count:int = 40
+enum RenderTarget { BACKGROUND, OVERRIDER }
 
 @export var angular_speed_range:Vector2
 @export var radius_range:Vector2
 @export var move_speed:Vector2
 @export var create_interval:float = 0.5
 @export var create_count_range:Vector2i = Vector2i(2,5)
-@export var seted_color:int = 0:#0是没确定的意思
-	set(v):
-		seted_color = v
-		change_index =0
+var seted_color:int = 0
 var create_count_down:float = 0
 var indexes:Array[int]
+var render_target:Dictionary[int,int]
 var polar_points:Component = Component.new()
 var radii:Component = Component.new()
 var angulur:Component = Component.new()
@@ -24,8 +23,9 @@ var polygons:Array[PackedVector2Array]
 
 var slice:float
 var max_point_count:int
-var change_index:int
 
+func _ready() -> void:
+	Game.background_changed.connect(func(c:int):seted_color=c)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -40,10 +40,6 @@ func _process(delta: float) -> void:
 		var create_count:= randi_range(create_count_range.x,create_count_range.y)
 		var diff:float = TAU*randf()
 		slice = TAU/create_count
-		if seted_color!=0:
-			change_index+=create_count
-		else :
-			change_index-= create_count
 		for i in create_count:
 			indexes.append(add_point(0.02,diff+i*slice))
 	deal_points(delta)
@@ -58,7 +54,7 @@ func deal_points(delta:float):
 		angulur.entity_set(id,angulur.entity_find(id)+angulur_speed.entity_find(id)*delta)
 
 func _draw() -> void:
-	var points:Array[Vector2]
+	var points:Array[Vector2] = []
 	var posi:Vector2
 	var polar_posi:Vector2
 	for i in indexes:
@@ -71,18 +67,18 @@ func _draw() -> void:
 		points.append(to_global(posi))
 		
 	polygons= get_voronoi_polygons(points)
-	var index_size:=indexes.size()
-	for i in index_size:
-		if i+change_index >= index_size:return
-		if polygons[i].is_empty():
+	for i in indexes.size():
+		var id := indexes[i]
+		if render_target[id] != RenderTarget.BACKGROUND or polygons[i].is_empty():
 			continue
 		var local_polygon := PackedVector2Array()
 		for point in polygons[i]:
 			local_polygon.append(to_local(point))
-		draw_colored_polygon(local_polygon,color.entity_find(indexes[i]))
+		draw_colored_polygon(local_polygon,color.entity_find(id))
 
 func add_point(l:float,theta:float)->int:
 	var id:= create_entity()
+	render_target[id] = RenderTarget.BACKGROUND if seted_color == 0 else RenderTarget.OVERRIDER
 	polar_points.entity_add(id,Vector2(l,theta))
 	radii.entity_add(id,randf_range(radius_range.x,radius_range.y))
 	angulur.entity_add(id,randf_range(angular_speed_range.x,angular_speed_range.y))
@@ -130,6 +126,7 @@ func free_entity(id:int):
 	entity.pop_back()
 	entity_size-=1
 	free_list.append(id)
+	render_target.erase(id)
 	custom_free_method(id)
 
 func has_entity(id:int)->bool:
@@ -209,4 +206,4 @@ func _on_button_2_pressed() -> void:
 
 
 func _on_button_pressed() -> void:
-	seted_color = randi()%6
+	seted_color = randi_range(1, 6)
