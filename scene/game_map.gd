@@ -12,7 +12,7 @@ var posi_component:Component = Component.new()
 var sprite_component:Component = Component.new()
 var hint_component:Component = Component.new()
 var index_component:Component =Component.new()
-var posi_backgroud_override:Dictionary[Vector2i,int]
+var posi_backgroud_override:Dictionary[Vector2i,Game.BackGround]
 
 var entity_to_free:Array[int]
 
@@ -25,7 +25,6 @@ var presnting_stage:int = normal
 
 func _ready() -> void:
 	player.global_position = to_global(map_to_local(Vector2i.ZERO))
-	#TODO 完成这个 出场时候的路径-NPC是固定的那几个
 	refresh_inner_and_edges(get_camera_rect())
 	
 	# 写固定的地图
