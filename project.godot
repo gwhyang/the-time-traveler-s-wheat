@@ -98,11 +98,6 @@ variables={
 layout/style_list=[]
 layout/default_style="Default"
 
-[display]
-
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/soundmanager/plugin.cfg")

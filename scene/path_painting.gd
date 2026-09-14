@@ -151,7 +151,7 @@ func _draw() -> void:
 	for neighbor in world_map.hex_neibghbors:
 		var cell := world_map.get_neighbor_cell(world_map.player_cell,neighbor)
 		if world_map.can_player_move_to(cell):
-			draw_circle(world_map.to_global(world_map.map_to_local(cell)),10,Color.GREEN_YELLOW)
+			draw_circle(world_map.to_global(world_map.map_to_local(cell)),10,line_color)
 
 
 func _make_noisy_points(original_points:PackedVector2Array) -> PackedVector2Array:

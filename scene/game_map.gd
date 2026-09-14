@@ -18,6 +18,7 @@ var posi_backgroud_override:Dictionary[Vector2i,Game.BackGround]
 var entity_to_free:Array[int]
 
 var end_special_id:int = -1
+var end_special_move_tween:Tween
 
 var presnting_stage:int = normal
 var boss_waiting:bool = false
@@ -25,7 +26,6 @@ var boss_waiting:bool = false
 @export_range(0.0, 1.0, 0.01) var connect_weight:float = 0.2
 @export_range(0.0, 1.0, 0.01) var player_fetch_weight:float = 0.15
 @export_range(0.0, 1.0, 0.01) var npc_fetch_weight:float = 0.1
-
 
 func _ready() -> void:
 	Dialogic.timeline_ended.connect(Game.change_back_ground.bind(0))
@@ -59,12 +59,10 @@ func _process(delta: float) -> void:
 	
 	queue_redraw()
 	process_background_overrides()
-	if move_tween:
-		print("tween using")
-		if move_tween.is_running():
-			print("tween running")
-			return
-	print(boss_waiting)
+	if boss_waiting:
+		return
+	if move_tween and move_tween.is_running():
+		return
 	var id :=posi_component.value_id_first(player_cell)
 	if id>=0:
 		if timeline_component.has_entity(id):
@@ -117,22 +115,15 @@ func after_player_move():
 				continue
 			apply_dialgue_at(pick_object(),cp)
 			i+=1
-	elif end_special_id<0:
+	elif end_special_id<0 and not points.is_empty():
 		end_special_id = apply_dialgue_at(pick_object(),points[i])
-		print("end_special_id ",end_special_id)
-	print("current esi ",end_special_id)
 	
 	# add delet queue
-	print("delet points ",delet_points)
-	print("player cell",player_cell)
 	for cell in delet_points:
 		id = posi_component.value_id_first(cell)
 		if id<0:continue
 		#delet_points.append(id)
-		print("free posi",cell)
-		print("free id ",id)
 		if id == end_special_id:
-			print("ahhdaohdouadgp")
 			apply_dialgue_at(pick_object(),move_toward1(cell,player_cell))
 			continue
 		free_entity(id)
@@ -179,33 +170,61 @@ func custom_free_method(id:int):
 func apply_dialgue_at(index:int,posi:Vector2i)->int:
 	if index <0:return -1
 	if presnting_stage == preending:
-		var id = apply_tile_resource(end_presenting_dialgues[index-dialgues.size()],posi)
+		var end_index := index-dialgues.size()
+		if end_index < 0 or end_index >= end_presenting_dialgues.size():
+			return -1
+		var id := apply_tile_resource(end_presenting_dialgues[end_index],posi)
+		if id < 0:
+			return -1
 		if end_special_id<0:
 			index_component.entity_add(id,index)
-		else :
+		elif index_component.has_entity(id):
 			index_component.entity_set(id,index)
+		else :
+			index_component.entity_add(id,index)
 		return id
 	var id =apply_tile_resource(dialgues[index],posi)
+	if id < 0:
+		return -1
 	index_component.entity_add(id,index)
 	return id
 
 func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 	var hint:Node = gen_at(cell,res.hint)
 	if presnting_stage == preending and (end_special_id >=0):
-		timeline_component.entity_add(end_special_id,res.tileline_name)
-		
+		if not posi_component.has_entity(end_special_id) or not sprite_component.has_entity(end_special_id):
+			if is_instance_valid(hint):
+				hint.queue_free()
+			return -1
+
+		var old_cell:Vector2i = posi_component.entity_find(end_special_id)
+		if old_cell != cell:
+			posi_backgroud_override.erase(old_cell)
 		if res.background == Game.BackGround.NONE:
 			posi_backgroud_override.erase(cell)
 		else:
 			posi_backgroud_override[cell] = res.background
-		timeline_component.entity_add(end_special_id,res.tileline_name)
+
+		if timeline_component.has_entity(end_special_id):
+			timeline_component.entity_set(end_special_id,res.tileline_name)
+		else:
+			timeline_component.entity_add(end_special_id,res.tileline_name)
 		posi_component.entity_set(end_special_id,cell)
-		sprite_component.entity_find(end_special_id)
-		hint_component.entity_add(end_special_id,hint)
-		background_component.entity_add(end_special_id,res.background)
-		
-		move_to(sprite_component.entity_find(end_special_id),cell)
-		sprite_component.entity_find(end_special_id).position+=res.sprite_offset
+
+		if hint_component.has_entity(end_special_id):
+			var old_hint := hint_component.entity_find(end_special_id) as Node
+			hint_component.entity_set(end_special_id,hint)
+			if is_instance_valid(old_hint) and not old_hint.is_queued_for_deletion():
+				old_hint.queue_free()
+		else:
+			hint_component.entity_add(end_special_id,hint)
+
+		if background_component.has_entity(end_special_id):
+			background_component.entity_set(end_special_id,res.background)
+		else:
+			background_component.entity_add(end_special_id,res.background)
+
+		move_end_special_to(sprite_component.entity_find(end_special_id),cell,res.sprite_offset)
 		return end_special_id
 		
 		
@@ -231,6 +250,17 @@ func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 	spawn_at(cell,sprite)
 	sprite.position+=res.sprite_offset
 	return id
+
+func move_end_special_to(node:Node2D,desti:Vector2i,offset:Vector2):
+	if end_special_move_tween and end_special_move_tween.is_running():
+		end_special_move_tween.kill()
+	end_special_move_tween = create_tween()
+	end_special_move_tween.tween_property(
+		node,
+		"position",
+		map_to_local(desti) + offset,
+		move_duration
+	).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
 
 func process_background_overrides() -> void:
 	var camera := get_viewport().get_camera_2d()

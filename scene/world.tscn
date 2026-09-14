@@ -35,6 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://bv7p74hugw6sq" path="res://assets/background/湖.png" id="30_tl5qk"]
 [ext_resource type="Script" uid="uid://brl7c5bbj6yu8" path="res://scene/voronoi_overrider_paintor.gd" id="31_13g4d"]
 [ext_resource type="Texture2D" uid="uid://c5pphfj4fnww8" path="res://assets/background/屏幕截图 2026-09-10 232835.png" id="31_lvrhu"]
+[ext_resource type="Script" uid="uid://l112vjwipqgt" path="res://scene/hexcell_outline_painting.gd" id="35_1f62m"]
 [ext_resource type="Shader" uid="uid://b1pb7jrwm3fd" path="res://Resource/shaders/aniti_color.gdshader" id="36_qsqtq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5mgf"]
@@ -281,19 +282,21 @@ shader_parameter/based_on = SubResource("ViewportTexture_qsqtq")
 shader_parameter/match_color = Vector4(0.833, 0, 0, 1)
 shader_parameter/tolerance = 0.05
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_1gmmm"]
+viewport_path = NodePath("background_medium3")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6f8o3"]
 resource_local_to_scene = true
 shader = ExtResource("29_qsqtq")
+shader_parameter/source_texture = SubResource("ViewportTexture_1gmmm")
 shader_parameter/boundary_color = Color(0, 0, 0, 1)
 shader_parameter/glow_color = Color(1, 1, 1, 1)
 shader_parameter/alpha_threshold = 0.05
-shader_parameter/boundary_width = 1.0
-shader_parameter/glow_radius = 8.0
+shader_parameter/edge_threshold = 0.1499999966472
+shader_parameter/boundary_width = 2.30000003427276
+shader_parameter/glow_radius = 16.40000024437968
 shader_parameter/glow_opacity = 0.5
 shader_parameter/glow_falloff = 2.0
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_1gmmm"]
-viewport_path = NodePath("background_medium3")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1gmmm"]
 shader = ExtResource("36_qsqtq")
@@ -718,7 +721,11 @@ zoom = Vector2(1.87, 1.87)
 [node name="vornoi_line_painting" type="Node2D" parent="background_medium3" unique_id=1128105603]
 show_behind_parent = true
 script = ExtResource("30_lvrhu")
-outline_width = 5.5
+outline_width = 2.0
+
+[node name="hexcell_outline_painting" type="Node2D" parent="background_medium3" unique_id=1555383024]
+show_behind_parent = true
+script = ExtResource("35_1f62m")
 
 [node name="anti_color" type="SubViewport" parent="." unique_id=1256319103]
 transparent_bg = true
@@ -759,7 +766,6 @@ position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=908257445]
-visible = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1327950062]
 offset_right = 97.0
