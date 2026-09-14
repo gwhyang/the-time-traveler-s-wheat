@@ -29,8 +29,8 @@
 [ext_resource type="Texture2D" uid="uid://cvf26t1kmysip" path="res://assets/background/家.png" id="26_n02kn"]
 [ext_resource type="Texture2D" uid="uid://brrmm2x7vtdbg" path="res://assets/background/街道.png" id="27_puhxk"]
 [ext_resource type="Texture2D" uid="uid://ddaqsddt7ac04" path="res://assets/background/教室.png" id="28_spjrp"]
+[ext_resource type="Shader" uid="uid://dnndo8i6550og" path="res://scripts/voronoi_edge_outline.gdshader" id="29_1f62m"]
 [ext_resource type="Texture2D" uid="uid://diykd8yr4f88m" path="res://assets/background/走廊.png" id="29_13g4d"]
-[ext_resource type="Shader" uid="uid://b6dlnjgakaqpp" path="res://scripts/glowing_outline.gdshader" id="29_qsqtq"]
 [ext_resource type="Script" uid="uid://brwl8syoyvuvw" path="res://scene/vornoi_line_painting.gd" id="30_lvrhu"]
 [ext_resource type="Texture2D" uid="uid://bv7p74hugw6sq" path="res://assets/background/湖.png" id="30_tl5qk"]
 [ext_resource type="Script" uid="uid://brl7c5bbj6yu8" path="res://scene/voronoi_overrider_paintor.gd" id="31_13g4d"]
@@ -77,6 +77,9 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 terrain_set_0/terrain_1/name = "Terrain 1"
 terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_m5mgf")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_kof1m"]
+viewport_path = NodePath("background_medium")
 
 [sub_resource type="Shader" id="Shader_n02kn"]
 code = "shader_type canvas_item;
@@ -283,19 +286,19 @@ shader_parameter/match_color = Vector4(0.833, 0, 0, 1)
 shader_parameter/tolerance = 0.05
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_1gmmm"]
-viewport_path = NodePath("background_medium3")
+viewport_path = NodePath("background_medium")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6f8o3"]
 resource_local_to_scene = true
-shader = ExtResource("29_qsqtq")
+shader = ExtResource("29_1f62m")
 shader_parameter/source_texture = SubResource("ViewportTexture_1gmmm")
-shader_parameter/boundary_color = Color(0, 0, 0, 1)
-shader_parameter/glow_color = Color(1, 1, 1, 1)
-shader_parameter/alpha_threshold = 0.05
-shader_parameter/edge_threshold = 0.1499999966472
+shader_parameter/boundary_color = Color(0.05237948, 0.020844147, 0.065472595, 1)
+shader_parameter/glow_color = Color(0.9781037, 0.9504189, 0.8520341, 1)
+shader_parameter/edge_threshold = 0.02000000095
+shader_parameter/edge_softness = 0.150000007125
 shader_parameter/boundary_width = 2.30000003427276
-shader_parameter/glow_radius = 16.40000024437968
-shader_parameter/glow_opacity = 0.5
+shader_parameter/glow_radius = 25.20000037551024
+shader_parameter/glow_opacity = 0.999999977648
 shader_parameter/glow_falloff = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1gmmm"]
@@ -522,9 +525,31 @@ tile_set = SubResource("TileSet_emkrx")
 script = ExtResource("2_w4qq1")
 npc_spawn_chance = 0.15
 dialgues = Array[ExtResource("3_oiypb")]([ExtResource("4_a81yy"), ExtResource("5_qfj6m"), ExtResource("6_n02kn"), ExtResource("7_puhxk"), ExtResource("8_x11oh"), ExtResource("9_7h02s"), ExtResource("10_fb6u6"), ExtResource("11_spjrp"), ExtResource("12_13g4d"), ExtResource("13_tl5qk"), ExtResource("14_lvrhu"), ExtResource("15_hb7oa"), ExtResource("16_qsqtq"), ExtResource("17_1f62m"), ExtResource("18_p8o2l"), ExtResource("19_mr18f"), ExtResource("20_yadev")])
-end_presenting_dialgues = Array[ExtResource("3_oiypb")]([ExtResource("12_13g4d"), ExtResource("13_tl5qk")])
+end_presenting_dialgues = Array[ExtResource("3_oiypb")]([ExtResource("12_13g4d"), ExtResource("5_qfj6m"), ExtResource("6_n02kn")])
 edge_spawn_chance = 0.3
-player = NodePath("../Sprite2D")
+player = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="world_map" unique_id=1623943634]
+z_index = 2
+scale = Vector2(0.305, 0.305)
+texture = ExtResource("3_w4qq1")
+
+[node name="asdadad" type="TextureRect" parent="world_map/Sprite2D" unique_id=1101056262]
+visible = false
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_kof1m")
+expand_mode = 2
+
+[node name="Camera2D" type="Camera2D" parent="world_map/Sprite2D" unique_id=2016095714]
+unique_name_in_owner = true
+zoom = Vector2(1.87, 1.87)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
 
 [node name="debug_display" type="Node2D" parent="world_map" unique_id=318105889]
 visible = false
@@ -754,18 +779,8 @@ one_shot = true
 transparent_bg = true
 size = Vector2i(1152, 648)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1623943634]
-z_index = 2
-scale = Vector2(0.305, 0.305)
-texture = ExtResource("3_w4qq1")
-
-[node name="Camera2D" type="Camera2D" parent="Sprite2D" unique_id=2016095714]
-unique_name_in_owner = true
-zoom = Vector2(1.87, 1.87)
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=908257445]
+layer = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1327950062]
 offset_right = 97.0
