@@ -6,6 +6,7 @@ update teacher right
 join kai left
 teacher: 介绍一下，这是我们班新来的同学，凯。
 teacher: 赶紧去找个地方坐着吧。
+leave teacher
 
 这里有很多座位
 label 1

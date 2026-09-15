@@ -1,5 +1,6 @@
 [style name="textp"]
 kai (微笑): 你想和我一起玩吗？
+do Game.end_game()
 young_chroltte: …你是谁？
 kai (微笑): 你将来会认识我的。
 young_chroltte: 没有小朋友愿意和我玩。

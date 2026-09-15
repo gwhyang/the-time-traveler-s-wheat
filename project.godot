@@ -27,6 +27,7 @@ directories/dch_directory={
 "character1": "res://Dialogue/characters/character1.dch",
 "charlotte": "res://Dialogue/characters/charlotte.dch",
 "classmate": "res://Dialogue/characters/classmate.dch",
+"diary": "res://Dialogue/characters/diary.dch",
 "kai": "res://Dialogue/characters/kai.dch",
 "npc_d": "res://Dialogue/characters/npc_d.dch",
 "npc_e": "res://Dialogue/characters/npc_e.dch",
@@ -35,7 +36,9 @@ directories/dch_directory={
 "passerby_c": "res://Dialogue/characters/passerby_c.dch",
 "professor": "res://Dialogue/characters/professor.dch",
 "reporter": "res://Dialogue/characters/reporter.dch",
+"special item": "res://Dialogue/characters/special item.dch",
 "teacher": "res://Dialogue/characters/teacher.dch",
+"watch": "res://Dialogue/characters/watch.dch",
 "young_chroltte": "res://Dialogue/characters/young_chroltte.dch"
 }
 directories/dtl_directory={

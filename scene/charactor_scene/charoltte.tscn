@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c7mqowfauxsj5"]
 
 [ext_resource type="PackedScene" uid="uid://hq47dos7rtmg" path="res://scene/charactor_scene/charactor.tscn" id="1_meew8"]
-[ext_resource type="Texture2D" uid="uid://ct2s24sgnucka" path="res://assets/sprite/1.PNG" id="2_o0b03"]
-[ext_resource type="Texture2D" uid="uid://bf7harc5lho1x" path="res://assets/sprite/2.PNG" id="3_06kjr"]
+[ext_resource type="Texture2D" uid="uid://ct2s24sgnucka" path="res://assets/sprite/charactor/1.PNG" id="2_o0b03"]
+[ext_resource type="Texture2D" uid="uid://bf7harc5lho1x" path="res://assets/sprite/charactor/2.PNG" id="3_06kjr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_c4kx0"]
 animations = [{

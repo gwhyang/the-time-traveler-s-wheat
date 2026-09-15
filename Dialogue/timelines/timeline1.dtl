@@ -6,6 +6,7 @@ set {choice_finish_count} += 0.0
 label 1
 # 没信息,甚至没有说出玩家的特殊能力, 更别提玩家的秘密用作伏笔了
 - 日记 | [=""]
+	join diary center
 	set {choice_finish_count} += 1.0
 	你是何时拥有这项能力的？你不记得了。
 	只是有一天睁开眼，发现自己正在出生那年的火车上倒行，窗外是一片白雪。

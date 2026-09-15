@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dm2p468u8nn18"]
 
 [ext_resource type="PackedScene" uid="uid://hq47dos7rtmg" path="res://scene/charactor_scene/charactor.tscn" id="1_ibj38"]
-[ext_resource type="Texture2D" uid="uid://efu8jnt570xf" path="res://assets/sprite/IMG_0489.PNG" id="2_ccdkv"]
+[ext_resource type="Texture2D" uid="uid://efu8jnt570xf" path="res://assets/sprite/charactor/IMG_0489.PNG" id="2_ccdkv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_prkei"]
 animations = [{

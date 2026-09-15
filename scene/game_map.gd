@@ -33,6 +33,8 @@ var ending_charactors:Array[Charactor] = []
 @export_range(0.0, 1.0, 0.01) var connect_weight:float = 0.2
 @export_range(0.0, 1.0, 0.01) var player_fetch_weight:float = 0.15
 @export_range(0.0, 1.0, 0.01) var npc_fetch_weight:float = 0.1
+@onready var voronoi_point_emmitor: VoronoiEmitor = %VoronoiPointEmmitor
+@onready var path_painting: Node2D = $"../anti_color/path_painting"
 
 func _ready() -> void:
 	Dialogic.timeline_ended.connect(Game.change_back_ground.bind(0))
@@ -59,7 +61,8 @@ func end_game() -> void:
 	ending = true
 	presnting_stage = end
 	spawn_ending_charactors()
-
+	voronoi_point_emmitor.force_background = true
+	path_painting.hide()
 	# register_character 是文本气泡布局（textp 样式）提供的。
 	# 必须先切样式并等布局 ready 再 start：否则 Dialogic 会在布局 ready 时
 	# 清状态，随后第一个文本事件用 change_style(base_style="") 回落到默认样式
@@ -207,6 +210,10 @@ func after_player_move():
 	points.shuffle()
 	var i :int = 0
 	if not presnting_stage == preending:
+		# 最后一段对话是结尾演出（end_game）的触发点，整图同时只保留
+		# 一份；否则它会像普通对话一样在每个刷怪点重复出现。
+		var last_index := dialgues.size()-1
+		var ending_exists:bool = index_component.values.has(last_index)
 		while i < target_count:
 			if i >= points.size():break
 			var cp :Vector2i= points[i]
@@ -214,7 +221,12 @@ func after_player_move():
 				i+=1
 				target_count+=1
 				continue
-			apply_dialgue_at(pick_object(),cp)
+			var picked:int = pick_object()
+			if picked == last_index and ending_exists:
+				break
+			apply_dialgue_at(picked,cp)
+			if picked == last_index:
+				ending_exists = true
 			i+=1
 	elif end_special_id<0 and not points.is_empty():
 		end_special_id = apply_dialgue_at(pick_object(),points[i])

@@ -5,6 +5,11 @@ var game_mode:GameMode=GameMode.WALK
 var scene_flag:int = 0b1111111111111111
 
 signal background_changed(id:int)
+signal street_rian(is_rain:bool)
+signal game_end
+
+func end_game():
+	game_end.emit()
 
 func _ready() -> void:
 	Dialogic.timeline_started.connect(on_timeline_start)
@@ -18,3 +23,6 @@ func on_timeline_end():
 
 func change_back_ground(id:int):
 	background_changed.emit(id)
+
+func rain_street(is_rain:bool):
+	street_rian.emit(is_rain)

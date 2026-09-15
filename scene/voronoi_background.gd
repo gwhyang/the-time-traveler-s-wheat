@@ -8,6 +8,9 @@ enum RenderTarget { BACKGROUND, OVERRIDER }
 @export var angular_speed_range:Vector2
 @export var radius_range:Vector2
 @export var move_speed:Vector2
+## 为真时，无论 seted_color 当前是什么场景，生成的点都以
+## BACKGROUND 渲染（颜色逻辑不变：0 号随机，1-6 对应色）。
+@export var force_background:bool = false
 @export var create_interval:float = 0.5
 @export var create_count_range:Vector2i = Vector2i(2,5)
 var seted_color:int = 0
@@ -78,7 +81,7 @@ func _draw() -> void:
 
 func add_point(l:float,theta:float)->int:
 	var id:= create_entity()
-	render_target[id] = RenderTarget.BACKGROUND if seted_color == 0 else RenderTarget.OVERRIDER
+	render_target[id] = RenderTarget.BACKGROUND if force_background or seted_color == 0 else RenderTarget.OVERRIDER
 	polar_points.entity_add(id,Vector2(l,theta))
 	radii.entity_add(id,randf_range(radius_range.x,radius_range.y))
 	angulur.entity_add(id,randf_range(angular_speed_range.x,angular_speed_range.y))

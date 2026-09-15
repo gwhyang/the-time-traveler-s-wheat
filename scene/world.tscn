@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://0821fg1gq1q2" path="res://scene/debug_display.gd" id="4_emkrx"]
 [ext_resource type="Resource" uid="uid://b23ktyi5u0b31" path="res://Resource/tile resource/t1.tres" id="5_qfj6m"]
 [ext_resource type="Resource" uid="uid://b23ktyi5u0b32" path="res://Resource/tile resource/t2.tres" id="6_n02kn"]
+[ext_resource type="Texture2D" uid="uid://de152b5wvmp0b" path="res://assets/background/实验室.png" id="7_p8o2l"]
 [ext_resource type="Resource" uid="uid://b23ktyi5u0b33" path="res://Resource/tile resource/t3.tres" id="7_puhxk"]
 [ext_resource type="Resource" uid="uid://b23ktyi5u0b34" path="res://Resource/tile resource/t4.tres" id="8_x11oh"]
 [ext_resource type="Resource" uid="uid://b23ktyi5u0b35" path="res://Resource/tile resource/t5.tres" id="9_7h02s"]
@@ -516,6 +517,9 @@ script = ExtResource("1_tl5qk")
 view_ports = [NodePath("../background_medium"), NodePath("../background_medium2"), NodePath("../background_medium3"), NodePath("../palyer")]
 sync_cameras = [NodePath("../anti_color/Camera2D")]
 
+[node name="Timer" type="Timer" parent="tools" unique_id=95103810]
+wait_time = 3.0
+
 [node name="backgrounds" type="CanvasLayer" parent="." unique_id=555025657]
 layer = -1
 
@@ -577,7 +581,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("31_lvrhu")
+texture = ExtResource("7_p8o2l")
 expand_mode = 2
 
 [node name="outline" type="TextureRect" parent="backgrounds" unique_id=595694975]
@@ -782,6 +786,7 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "地图背景"
 
+[connection signal="timeout" from="tools/Timer" to="tools" method="random_background"]
 [connection signal="timeout" from="anti_color/path_painting/Timer" to="anti_color/path_painting" method="_on_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Button" to="background_medium/VoronoiPointEmmitor" method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Button2" to="background_medium/VoronoiPointEmmitor" method="_on_button_2_pressed"]
