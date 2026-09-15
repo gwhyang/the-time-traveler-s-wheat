@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://brumpoilmp0dq"]
+
+[ext_resource type="Texture2D" uid="uid://c44qm474cq1v7" path="res://assets/sprite/1 (2).PNG" id="1_8phd2"]
+[ext_resource type="PackedScene" uid="uid://hq47dos7rtmg" path="res://scene/charactor_scene/charactor.tscn" id="1_ty46q"]
+[ext_resource type="Texture2D" uid="uid://c6m2ikopdvhgy" path="res://assets/sprite/2 (2).PNG" id="2_ty46q"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5j8tp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8phd2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ty46q")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="kai" unique_id=1556522162 instance=ExtResource("1_ty46q")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=543005040]
+sprite_frames = SubResource("SpriteFrames_5j8tp")
+frame_progress = 0.0
+
+[node name="dialogue anchor" parent="." index="1" unique_id=766554340]
+position = Vector2(31, -38)

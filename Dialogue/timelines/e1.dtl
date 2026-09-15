@@ -1,0 +1,20 @@
+join kai left
+kai: 这里是……湖边？
+kai: 看天色是刚放学的样子
+join charlotte right
+charlotte: 你怎么走的这么快！
+夏洛特突然出现，你被吓了一跳
+kai: 夏洛特！
+charlotte: 冷不丁喊我干嘛，[pause=0.7]跟要表白一样。
+- 不要去新贝街
+	charlotte: 你怎么知道我想去那里的？
+	charlotte: 为什么不要去
+	charlotte: 就当是为了让你见最后一面
+	charlotte: 我也要去
+	set {endtimeline} = 1.0
+- 为什么非要去新贝街
+	charlotte (担忧): 也不是非要去了
+	charlotte (微笑): 为了你
+	charlotte (普通): 不，应该说是“因为你”
+	set {endtimeline} = 2.0
+她神秘的笑了一下

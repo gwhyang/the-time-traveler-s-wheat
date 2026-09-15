@@ -4,7 +4,7 @@ enum {normal,preending,end}
 @export_range(0.0, 1.0, 0.01) var npc_spawn_chance: float = 0.4
 @export var dialgues:Array[TileResource]
 @export var end_presenting_dialgues:Array[TileResource]
-
+@export var end_dilgue:String
 const C_1 = preload("uid://b23ktyi5u0b3k")
 
 var timeline_component:Component = Component.new()
@@ -36,7 +36,7 @@ func _ready() -> void:
 	
 	# 写固定的地图
 	var fin_point:=Vector2i.ZERO
-	var teching_dialgues:Array[int] #= [1,2,3,4]
+	var teching_dialgues:Array[int] = [1,2,3,4]
 	#teching_dialgues.clear()
 	while inner_points.has(fin_point) or not teching_dialgues.is_empty():
 		fin_point+= Vector2i.RIGHT
@@ -45,6 +45,14 @@ func _ready() -> void:
 			apply_dialgue_at(teching_dialgues.pop_front(),fin_point)
 	
 func end_game():
+	var laylout:= Dialogic.start(end_dilgue)
+	if not laylout:
+		printerr("snosof")
+		return
+	laylout.resister_charactor("kai",player.dialogue_anchor)
+	laylout.resister_charactor("charlotte",sprite_component.entity_find(end_special_id).dialogue_anchor)
+	
+	
 	pass
 
 func _input(event: InputEvent) -> void:
@@ -275,8 +283,14 @@ func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 		return apply_end_special(res,cell)
 	var hint:Node = gen_at(cell,res.hint)
 
-	var sprite:= Sprite2D.new()
-	
+	if res.sprite == null:
+		printerr("apply_tile_resource: sprite scene is null")
+		return -1
+	var sprite := res.sprite.instantiate() as Node2D
+	if sprite == null:
+		printerr("apply_tile_resource: sprite scene root is not Node2D")
+		return -1
+
 	if not hint:
 		printerr("qwhoqw")
 		return -1
@@ -286,14 +300,13 @@ func apply_tile_resource(res:TileResource,cell:Vector2i)->int:
 		posi_backgroud_override.erase(cell)
 	else:
 		posi_backgroud_override[cell] = res.background
-		
+
 	timeline_component.entity_add(id,res.tileline_name)
 	posi_component.entity_add(id,cell)
 	sprite_component.entity_add(id,sprite)
 	hint_component.entity_add(id,hint)
 	background_component.entity_add(id,res.background)
-	
-	sprite.texture = res.sprite
+
 	spawn_at(cell,sprite)
 	sprite.position+=res.sprite_offset
 	return id

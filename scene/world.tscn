@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://cqmjwxkvf8smy" path="res://scene/game_map.gd" id="2_w4qq1"]
 [ext_resource type="Script" uid="uid://cket42q10u0nv" path="res://scene/path_painting.gd" id="3_m5mgf"]
 [ext_resource type="Script" uid="uid://bxeklppsjjev8" path="res://scripts/tile_object.gd" id="3_oiypb"]
-[ext_resource type="Texture2D" uid="uid://dfio1gmy5hqq4" path="res://icon.svg" id="3_w4qq1"]
 [ext_resource type="Resource" uid="uid://b23ktyi5u0b3k" path="res://Resource/tile resource/c1.tres" id="4_a81yy"]
 [ext_resource type="Script" uid="uid://0821fg1gq1q2" path="res://scene/debug_display.gd" id="4_emkrx"]
 [ext_resource type="Resource" uid="uid://b23ktyi5u0b31" path="res://Resource/tile resource/t1.tres" id="5_qfj6m"]
@@ -25,6 +24,7 @@
 [ext_resource type="Resource" uid="uid://b23ktyi5u0b3f" path="res://Resource/tile resource/t15.tres" id="19_mr18f"]
 [ext_resource type="Resource" uid="uid://b23ktyi5u0b3g" path="res://Resource/tile resource/t16.tres" id="20_yadev"]
 [ext_resource type="Script" uid="uid://bqa1r2giefctm" path="res://scene/voronoi_background.gd" id="21_qfj6m"]
+[ext_resource type="PackedScene" uid="uid://brumpoilmp0dq" path="res://scene/charactor_scene/kai.tscn" id="22_1f62m"]
 [ext_resource type="Script" uid="uid://df6cv8oucqfm2" path="res://scene/color_division.gd" id="22_qfj6m"]
 [ext_resource type="Texture2D" uid="uid://cvf26t1kmysip" path="res://assets/background/家.png" id="26_n02kn"]
 [ext_resource type="Texture2D" uid="uid://brrmm2x7vtdbg" path="res://assets/background/街道.png" id="27_puhxk"]
@@ -37,49 +37,6 @@
 [ext_resource type="Texture2D" uid="uid://c5pphfj4fnww8" path="res://assets/background/屏幕截图 2026-09-10 232835.png" id="31_lvrhu"]
 [ext_resource type="Script" uid="uid://l112vjwipqgt" path="res://scene/hexcell_outline_painting.gd" id="35_1f62m"]
 [ext_resource type="Shader" uid="uid://b1pb7jrwm3fd" path="res://Resource/shaders/aniti_color.gdshader" id="36_qsqtq"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5mgf"]
-texture = ExtResource("1_txmk2")
-separation = Vector2i(2, 2)
-texture_region_size = Vector2i(120, 140)
-0:12/0 = 0
-0:12/0/terrain_set = 0
-0:12/0/terrain = 1
-0:12/0/terrains_peering_bit/right_side = 1
-0:12/0/terrains_peering_bit/bottom_right_side = 1
-0:12/0/terrains_peering_bit/bottom_left_side = 1
-0:12/0/terrains_peering_bit/left_side = 1
-0:12/0/terrains_peering_bit/top_left_side = 1
-0:12/0/terrains_peering_bit/top_right_side = 1
-5:1/0 = 0
-5:1/0/terrain_set = 0
-5:1/0/terrain = 0
-5:1/0/terrains_peering_bit/right_side = 0
-5:1/0/terrains_peering_bit/bottom_right_side = 0
-5:1/0/terrains_peering_bit/bottom_left_side = 0
-5:1/0/terrains_peering_bit/left_side = 0
-5:1/0/terrains_peering_bit/top_left_side = 0
-5:1/0/terrains_peering_bit/top_right_side = 0
-7:6/0 = 0
-7:5/0 = 0
-8:6/0 = 0
-9:6/0 = 0
-9:5/0 = 0
-4:7/0 = 0
-5:5/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_emkrx"]
-tile_shape = 3
-tile_size = Vector2i(120, 140)
-terrain_set_0/mode = 0
-terrain_set_0/terrain_0/name = "Terrain 0"
-terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
-terrain_set_0/terrain_1/name = "Terrain 1"
-terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
-sources/0 = SubResource("TileSetAtlasSource_m5mgf")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_kof1m"]
-viewport_path = NodePath("background_medium")
 
 [sub_resource type="Shader" id="Shader_n02kn"]
 code = "shader_type canvas_item;
@@ -292,14 +249,54 @@ viewport_path = NodePath("background_medium")
 resource_local_to_scene = true
 shader = ExtResource("29_1f62m")
 shader_parameter/source_texture = SubResource("ViewportTexture_1gmmm")
-shader_parameter/boundary_color = Color(0.05237948, 0.020844147, 0.065472595, 1)
+shader_parameter/boundary_color = Color(0.82, 0.7850133, 0.68880004, 1)
 shader_parameter/glow_color = Color(0.9781037, 0.9504189, 0.8520341, 1)
-shader_parameter/edge_threshold = 0.02000000095
-shader_parameter/edge_softness = 0.150000007125
-shader_parameter/boundary_width = 2.30000003427276
-shader_parameter/glow_radius = 25.20000037551024
-shader_parameter/glow_opacity = 0.999999977648
-shader_parameter/glow_falloff = 2.0
+shader_parameter/edge_threshold = 0.0
+shader_parameter/edge_softness = 0.2310000109725
+shader_parameter/boundary_width = 1.80000002682216
+shader_parameter/glow_radius = 25.10000037402012
+shader_parameter/glow_opacity = 0.73999998345952
+shader_parameter/glow_falloff = 1.90000002831228
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5mgf"]
+texture = ExtResource("1_txmk2")
+separation = Vector2i(2, 2)
+texture_region_size = Vector2i(120, 140)
+0:12/0 = 0
+0:12/0/terrain_set = 0
+0:12/0/terrain = 1
+0:12/0/terrains_peering_bit/right_side = 1
+0:12/0/terrains_peering_bit/bottom_right_side = 1
+0:12/0/terrains_peering_bit/bottom_left_side = 1
+0:12/0/terrains_peering_bit/left_side = 1
+0:12/0/terrains_peering_bit/top_left_side = 1
+0:12/0/terrains_peering_bit/top_right_side = 1
+5:1/0 = 0
+5:1/0/terrain_set = 0
+5:1/0/terrain = 0
+5:1/0/terrains_peering_bit/right_side = 0
+5:1/0/terrains_peering_bit/bottom_right_side = 0
+5:1/0/terrains_peering_bit/bottom_left_side = 0
+5:1/0/terrains_peering_bit/left_side = 0
+5:1/0/terrains_peering_bit/top_left_side = 0
+5:1/0/terrains_peering_bit/top_right_side = 0
+7:6/0 = 0
+7:5/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+9:5/0 = 0
+4:7/0 = 0
+5:5/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_emkrx"]
+tile_shape = 3
+tile_size = Vector2i(120, 140)
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Terrain 0"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+terrain_set_0/terrain_1/name = "Terrain 1"
+terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
+sources/0 = SubResource("TileSetAtlasSource_m5mgf")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1gmmm"]
 shader = ExtResource("36_qsqtq")
@@ -519,44 +516,6 @@ script = ExtResource("1_tl5qk")
 view_ports = [NodePath("../background_medium"), NodePath("../background_medium2"), NodePath("../background_medium3"), NodePath("../palyer")]
 sync_cameras = [NodePath("../anti_color/Camera2D")]
 
-[node name="world_map" type="TileMapLayer" parent="." unique_id=1607535154 node_paths=PackedStringArray("player")]
-unique_name_in_owner = true
-tile_set = SubResource("TileSet_emkrx")
-script = ExtResource("2_w4qq1")
-npc_spawn_chance = 0.15
-dialgues = Array[ExtResource("3_oiypb")]([ExtResource("4_a81yy"), ExtResource("5_qfj6m"), ExtResource("6_n02kn"), ExtResource("7_puhxk"), ExtResource("8_x11oh"), ExtResource("9_7h02s"), ExtResource("10_fb6u6"), ExtResource("11_spjrp"), ExtResource("12_13g4d"), ExtResource("13_tl5qk"), ExtResource("14_lvrhu"), ExtResource("15_hb7oa"), ExtResource("16_qsqtq"), ExtResource("17_1f62m"), ExtResource("18_p8o2l"), ExtResource("19_mr18f"), ExtResource("20_yadev")])
-end_presenting_dialgues = Array[ExtResource("3_oiypb")]([ExtResource("12_13g4d"), ExtResource("5_qfj6m"), ExtResource("6_n02kn")])
-edge_spawn_chance = 0.3
-player = NodePath("Sprite2D")
-
-[node name="Sprite2D" type="Sprite2D" parent="world_map" unique_id=1623943634]
-z_index = 2
-scale = Vector2(0.305, 0.305)
-texture = ExtResource("3_w4qq1")
-
-[node name="asdadad" type="TextureRect" parent="world_map/Sprite2D" unique_id=1101056262]
-visible = false
-z_index = -1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_kof1m")
-expand_mode = 2
-
-[node name="Camera2D" type="Camera2D" parent="world_map/Sprite2D" unique_id=2016095714]
-unique_name_in_owner = true
-zoom = Vector2(1.87, 1.87)
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
-
-[node name="debug_display" type="Node2D" parent="world_map" unique_id=318105889]
-visible = false
-script = ExtResource("4_emkrx")
-
-[node name="Node2D" type="Node2D" parent="world_map" unique_id=1931691849]
-
 [node name="backgrounds" type="CanvasLayer" parent="." unique_id=555025657]
 layer = -1
 
@@ -630,6 +589,32 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_1gmmm")
 expand_mode = 2
+
+[node name="world_map" type="TileMapLayer" parent="." unique_id=1607535154 node_paths=PackedStringArray("player")]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_emkrx")
+script = ExtResource("2_w4qq1")
+npc_spawn_chance = 0.15
+dialgues = Array[ExtResource("3_oiypb")]([ExtResource("4_a81yy"), ExtResource("5_qfj6m"), ExtResource("6_n02kn"), ExtResource("7_puhxk"), ExtResource("8_x11oh"), ExtResource("9_7h02s"), ExtResource("10_fb6u6"), ExtResource("11_spjrp"), ExtResource("12_13g4d"), ExtResource("13_tl5qk"), ExtResource("14_lvrhu"), ExtResource("15_hb7oa"), ExtResource("16_qsqtq"), ExtResource("17_1f62m"), ExtResource("18_p8o2l"), ExtResource("19_mr18f"), ExtResource("20_yadev")])
+end_dilgue = "final"
+edge_spawn_chance = 0.3
+player = NodePath("kai")
+
+[node name="Node2D" type="Node2D" parent="world_map" unique_id=1931691849]
+
+[node name="kai" parent="world_map" unique_id=1556522162 instance=ExtResource("22_1f62m")]
+script = null
+
+[node name="Camera2D" type="Camera2D" parent="world_map/kai" unique_id=2016095714]
+unique_name_in_owner = true
+scale = Vector2(0.305, 0.305)
+zoom = Vector2(1.87, 1.87)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="debug_display" type="Node2D" parent="world_map/kai" unique_id=318105889]
+visible = false
+script = ExtResource("4_emkrx")
 
 [node name="post_effect" type="CanvasLayer" parent="." unique_id=1835264314]
 layer = 0
@@ -719,8 +704,8 @@ unique_name_in_owner = true
 script = ExtResource("21_qfj6m")
 angular_speed_range = Vector2(0.575, 3)
 radius_range = Vector2(0.24, 0.52)
-move_speed = Vector2(11, 1)
-create_interval = 0.2
+move_speed = Vector2(5, 0.1)
+create_interval = 0.4
 metadata/_custom_type_script = "uid://olmjhh7l8md7"
 
 [node name="color_division" type="Node2D" parent="background_medium" unique_id=753979188]
@@ -781,6 +766,7 @@ size = Vector2i(1152, 648)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=908257445]
 layer = 2
+visible = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1327950062]
 offset_right = 97.0

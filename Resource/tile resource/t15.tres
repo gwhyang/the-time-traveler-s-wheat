@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bxeklppsjjev8" path="res://scripts/tile_object.gd" id="1_gwex3"]
 [ext_resource type="PackedScene" uid="uid://dqsm75dy13w3e" path="res://scene/hint/hint.tscn" id="1_wgtnn"]
-[ext_resource type="Texture2D" uid="uid://ctm3bat2d1sj4" path="res://assets/sprite/屏幕截图 2026-09-11 004410.png" id="2_g6f2x"]
+[ext_resource type="PackedScene" uid="uid://brumpoilmp0dq" path="res://scene/charactor_scene/kai.tscn" id="3_txj8t"]
 
 [resource]
 script = ExtResource("1_gwex3")
 tileline_name = "timeline15"
-sprite = ExtResource("2_g6f2x")
+sprite = ExtResource("3_txj8t")
 hint = ExtResource("1_wgtnn")
 background = 6
 metadata/_custom_type_script = "uid://bxeklppsjjev8"

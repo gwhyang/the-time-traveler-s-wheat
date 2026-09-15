@@ -10,20 +10,61 @@
 "style": "",
 "suffix": ""
 },
-&"default_portrait": "New portrait",
+&"default_portrait": "普通",
 &"description": "",
 &"display_name": "夏洛蒂",
 &"mirror": false,
 &"nicknames": [""],
 &"offset": Vector2(0, 0),
 &"portraits": {
-"New portrait": {
+"大笑": {
 "export_overrides": {
-"image": "\"res://icon.svg\""
+"image": "\"res://assets/portrait/夏洛特/大笑.PNG\""
 },
+"ignore_char_scale": false,
 "mirror": false,
-"offset": Vector2(0, 0),
-"scale": 1,
+"offset": Vector2(0, 100),
+"scale": 1.0,
+"scene": ""
+},
+"微笑": {
+"export_overrides": {
+"image": "\"res://assets/portrait/夏洛特/微笑.PNG\""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 100),
+"scale": 1.0,
+"scene": ""
+},
+"担忧": {
+"export_overrides": {
+"image": "\"res://assets/portrait/夏洛特/担忧.PNG\""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 100),
+"scale": 1.0,
+"scene": ""
+},
+"普通": {
+"export_overrides": {
+"image": "\"res://assets/portrait/夏洛特/普通.PNG\""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 100),
+"scale": 1.0,
+"scene": ""
+},
+"警惕": {
+"export_overrides": {
+"image": "\"res://assets/portrait/夏洛特/警惕.PNG\""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 100),
+"scale": 1.0,
 "scene": ""
 }
 },

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c7mqowfauxsj5"]
+
+[ext_resource type="PackedScene" uid="uid://hq47dos7rtmg" path="res://scene/charactor_scene/charactor.tscn" id="1_meew8"]
+[ext_resource type="Texture2D" uid="uid://ct2s24sgnucka" path="res://assets/sprite/1.PNG" id="2_o0b03"]
+[ext_resource type="Texture2D" uid="uid://bf7harc5lho1x" path="res://assets/sprite/2.PNG" id="3_06kjr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c4kx0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_o0b03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_06kjr")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="charoltte" unique_id=1556522162 instance=ExtResource("1_meew8")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=543005040]
+sprite_frames = SubResource("SpriteFrames_c4kx0")
+frame_progress = 0.0
+
+[node name="dialogue anchor" parent="." index="1" unique_id=766554340]
+position = Vector2(27, -27)

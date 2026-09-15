@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://hq47dos7rtmg"]
+
+[ext_resource type="Script" uid="uid://bj61pdem455b6" path="res://scene/charactor_scene/charactor.gd" id="1_sc3jg"]
+
+[node name="name" type="Node2D" unique_id=1556522162]
+script = ExtResource("1_sc3jg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=543005040]
+scale = Vector2(0.04, 0.04)
+autoplay = "default"
+frame_progress = 0.4210317
+
+[node name="dialogue anchor" type="Marker2D" parent="." unique_id=766554340]
+unique_name_in_owner = true

@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://xgsthp06uqid"]
+
+[ext_resource type="PackedScene" uid="uid://hq47dos7rtmg" path="res://scene/charactor_scene/charactor.tscn" id="1_f6xri"]
+[ext_resource type="Texture2D" uid="uid://bjg8byl0n7rsu" path="res://assets/sprite/IMG_0487.PNG" id="2_rlyu6"]
+[ext_resource type="Texture2D" uid="uid://cxgix0k3jlecw" path="res://assets/sprite/IMG_0491.PNG" id="3_8ykvm"]
+[ext_resource type="Texture2D" uid="uid://b1x4yu688s0we" path="res://assets/sprite/IMG_0493.PNG" id="4_qfdfc"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ty46q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rlyu6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8ykvm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qfdfc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="parssors_by" unique_id=1556522162 instance=ExtResource("1_f6xri")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=543005040]
+sprite_frames = SubResource("SpriteFrames_ty46q")
+frame_progress = 0.10242709

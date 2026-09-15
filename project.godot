@@ -35,9 +35,16 @@ directories/dch_directory={
 "passerby_c": "res://Dialogue/characters/passerby_c.dch",
 "professor": "res://Dialogue/characters/professor.dch",
 "reporter": "res://Dialogue/characters/reporter.dch",
-"teacher": "res://Dialogue/characters/teacher.dch"
+"teacher": "res://Dialogue/characters/teacher.dch",
+"young_chroltte": "res://Dialogue/characters/young_chroltte.dch"
 }
 directories/dtl_directory={
+"e1": "res://Dialogue/timelines/e1.dtl",
+"e2": "res://Dialogue/timelines/e2.dtl",
+"e3": "res://Dialogue/timelines/e3.dtl",
+"e4": "res://Dialogue/timelines/e4.dtl",
+"e5": "res://Dialogue/timelines/e5.dtl",
+"final": "res://Dialogue/timelines/final.dtl",
 "timeline": "res://Dialogue/timelines/timeline1.dtl",
 "timeline10": "res://Dialogue/timelines/timeline10.dtl",
 "timeline11": "res://Dialogue/timelines/timeline11.dtl",
@@ -56,7 +63,9 @@ directories/dtl_directory={
 "timeline8": "res://Dialogue/timelines/timeline8.dtl",
 "timeline9": "res://Dialogue/timelines/timeline9.dtl"
 }
-layout/style_directory={}
+layout/style_directory={
+"textp": "res://Dialogue/style/textp.tres"
+}
 glossary/default_case_sensitive=true
 text/letter_speed=0.03
 text/initial_text_reveal_skippable=true
@@ -93,10 +102,11 @@ audio/channel_defaults={
 variables={
 "a": false,
 "b": false,
-"choice_finish_count": 0
+"choice_finish_count": 0,
+"endtimeline": 0
 }
-layout/style_list=[]
-layout/default_style="Default"
+layout/style_list=["res://Dialogue/style/textp.tres"]
+layout/default_style="res://Dialogue/textp/textp.tres"
 
 [editor_plugins]
 
