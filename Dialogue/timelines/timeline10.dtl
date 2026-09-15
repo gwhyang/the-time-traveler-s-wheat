@@ -1,3 +1,4 @@
+audio music "res://assets/music/离别.mp3" [fade="0.0"]
 join charlotte right
 join kai left
 kai (悲伤): 夏洛蒂…
@@ -23,3 +24,4 @@ kai (悲伤): …我只是希望此刻能长一点。
 charlotte (微笑): 我当然也这么希望。
 charlotte (微笑): …但如果明天是我的死期，我也会如平常一样度过今日，然后与你道别。
 kai (愤怒): 根本就不该是这样的，我们根本就不一样。
+audio music -

@@ -1,4 +1,5 @@
 [style name="textp"]
+audio music "res://assets/music/17结尾.mp3"
 kai (微笑): 你想和我一起玩吗？
 do Game.end_game()
 young_chroltte: …你是谁？

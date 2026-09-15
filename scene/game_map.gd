@@ -46,7 +46,7 @@ func _ready() -> void:
 	# 写固定的地图
 	var fin_point:=Vector2i.ZERO
 	var teching_dialgues:Array[int] = [1,2,3,4]
-	teching_dialgues.clear()
+	#teching_dialgues.clear()
 	while inner_points.has(fin_point) or not teching_dialgues.is_empty():
 		fin_point+= Vector2i.RIGHT
 		edges.append(point_to_edge(fin_point,fin_point-Vector2i.RIGHT))

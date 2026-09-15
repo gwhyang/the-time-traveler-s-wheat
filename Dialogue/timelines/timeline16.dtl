@@ -1,9 +1,12 @@
 do Game.rain_street(true)
+audio music "res://assets/music/打斗.mp3"
+audio amb "res://assets/sfx/rain-20s.wav"
 你来到了新贝街。
 雨倾泻而下。
 夏洛蒂正从新北街的一头走来。
 你认出来，这是案发前几分钟。
 
+audio "res://assets/sfx/钢筋断裂.wav" [loop="false"]
 楼层上传来钢筋崩断的脆响。
 二楼的空调外机支架锈蚀断裂，整台机器带着铁架朝夏洛蒂头顶砸下。
 
@@ -16,7 +19,7 @@ do Game.rain_street(true)
 事情就发生在几秒钟内，她的生命归于尘埃。
 你大脑一片空白，在路旁边愣住。
 
-【音效】
+audio "res://assets/sfx/钢筋断裂.wav" [loop="false"]
 但那辆车没有停下，它撞上路边电线杆，杆体折断，高压线崩断垂落。
 断头带着蓝色电弧甩向你，在积水中炸开一片火花。
 
@@ -24,6 +27,7 @@ do Game.rain_street(true)
 
 一只手从侧面抓住你，猛地把你拉开。
 你摔进积水里，惊魂未定地抬头。
+audio music -
 
 来人重重摔在路边。
 是实验的那位博士。
@@ -47,3 +51,5 @@ join "special item" (open) center
 夏洛蒂，我想记住与你同在的每一秒。
 所以，请让我穿越时空，不为改变什么。
 我只是想要，成为你的昨日。
+audio "res://assets/sfx/磁带倒放.wav" [loop="false"]
+audio amb -

@@ -14,3 +14,5 @@ charlotte: 所以，到底是因为什么？
 
 她没有等到你的回答。
 你再一次离开了她，游离到了彼时之外。
+audio "res://assets/sfx/穿越音效.wav" [loop="false"]
+audio music -

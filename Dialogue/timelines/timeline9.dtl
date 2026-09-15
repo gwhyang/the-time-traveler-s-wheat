@@ -1,5 +1,8 @@
+audio "res://assets/sfx/穿越音效.wav" [loop="false"]
 熟悉的感觉再一次到来。
 你又一次穿越走了。
+audio music "res://assets/music/悬疑紧张.mp3"
+audio amb "res://assets/sfx/风声轨.wav"
 join reporter center
 join npc_d right
 join npc_e rightmost
@@ -17,5 +20,7 @@ update npc_e center [move_time="0.1"]
 
 你挤到群众前面。
 尽管躺在中央的人已经血肉模糊，但你仍然一眼就认了出来。
+audio music -
 是夏洛蒂。
 你试图靠近。但周围再一次开始模糊。
+audio amb -

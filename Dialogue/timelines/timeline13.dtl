@@ -1,3 +1,4 @@
+audio amb "res://assets/sfx/风声轨.wav"
 人群围在一团，你有些不好的预感。
 join kai leftmost
 reporter: 现在是2028年5月29日，我在现场进行报道...
@@ -7,3 +8,4 @@ npc_d: 谁能想到呢...
 
 你站在路中央，任凭悲伤吞没了你。
 怎么会这样...
+audio amb -

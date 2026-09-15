@@ -35,7 +35,6 @@
 [ext_resource type="Script" uid="uid://brwl8syoyvuvw" path="res://scene/vornoi_line_painting.gd" id="30_lvrhu"]
 [ext_resource type="Texture2D" uid="uid://bv7p74hugw6sq" path="res://assets/background/湖.png" id="30_tl5qk"]
 [ext_resource type="Script" uid="uid://brl7c5bbj6yu8" path="res://scene/voronoi_overrider_paintor.gd" id="31_13g4d"]
-[ext_resource type="Texture2D" uid="uid://c5pphfj4fnww8" path="res://assets/background/屏幕截图 2026-09-10 232835.png" id="31_lvrhu"]
 [ext_resource type="Script" uid="uid://l112vjwipqgt" path="res://scene/hexcell_outline_painting.gd" id="35_1f62m"]
 [ext_resource type="Shader" uid="uid://b1pb7jrwm3fd" path="res://Resource/shaders/aniti_color.gdshader" id="36_qsqtq"]
 
@@ -693,7 +692,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("31_lvrhu")
+texture = ExtResource("7_p8o2l")
 expand_mode = 2
 
 [node name="background_medium" type="SubViewport" parent="." unique_id=1047935609]

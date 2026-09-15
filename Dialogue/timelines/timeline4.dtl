@@ -1,3 +1,4 @@
+audio music "res://assets/music/实验室.mp3"
 又是熟悉的感受。
 你再一次被动地进行了时间线的跳跃。
 你看了一眼旁边的表，表上写着时间：2057年3月19日
@@ -9,6 +10,8 @@ label 1
 	set {choice_finish_count} = 0.0
 	一个项链安静地躺在其中，周围是高科技的外壳，似乎是用来做什么的。
 	你伸手触碰，熟悉的感觉再一次传来。
+	audio "res://assets/sfx/穿越音效.wav" [loop="false"]
+	audio music -
 	你又一次跳跃了时空。
 	[end_timeline]
 jump 1

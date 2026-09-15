@@ -1,3 +1,5 @@
+audio amb "res://assets/sfx/教室人声.wav"
+audio music "res://assets/music/轻松.mp3"
 你看了一眼旁边的表，表上写着时间：2027年9月30日
 join teacher center
 
@@ -10,3 +12,5 @@ charlotte (微笑): 你可以去秘密基地一趟吗，半个小时后？
 join charlotte right
 kai (微笑): 好的
 charlotte (微笑): 不许迟到啊！
+audio amb -
+audio music -

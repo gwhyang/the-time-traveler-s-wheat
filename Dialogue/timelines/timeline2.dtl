@@ -1,3 +1,4 @@
+audio amb "res://assets/sfx/风声轨.wav"
 join passerby_a left
 join passerby_b right
 passerby_a: 听说过吗，这个街道上曾经还死过两个人。
@@ -19,3 +20,4 @@ reporter: 请问你如何看待网上的传言，说这个街道曾经有人高�
 - 2.这种像是谣言
 - 3.可能是真的吧
 reporter: 感谢您的时间。
+audio amb -

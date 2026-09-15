@@ -1,3 +1,4 @@
+audio music "res://assets/music/湖边.mp3"
 join charlotte right
 join kai left
 charlotte (警惕): 你是怎么知道这里的？这可是我的秘密基地。
@@ -31,3 +32,4 @@ kai: 是两人份的小组作业，你知道怎么完成它吗？
 charlotte (微笑): 你知道吗，我曾经见过你。
 kai: 什么？
 charlotte (微笑): 没什么，你想和我一起完成小组作业吗？
+audio music -

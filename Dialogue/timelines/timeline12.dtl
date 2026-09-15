@@ -13,3 +13,4 @@ update charlotte right
 charlotte: 让别人做什么事情，首先得告诉他们缘由吧？
 kai (悲伤): 我不想失去你。
 update charlotte right [move_time="0.3"]
+audio "res://assets/sfx/穿越音效.wav" [loop="false"]

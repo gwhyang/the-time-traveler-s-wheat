@@ -1,3 +1,4 @@
+audio music "res://assets/music/实验室.mp3"
 join professor right
 join kai left
 你看了一眼旁边的表，表上写着时间：2067年1月1日
@@ -17,3 +18,4 @@ kai (悲伤): 被动的被拉进过去或未来的某个时空，始终飘移在
 kai (悲伤): 我像浮萍一样，我好不容易找到了能够同频的人....
 professor: 那么你更该珍惜有她的每一刻。
 kai (愤怒): 我更应该凭借这份能力，这份不断给我悲伤的能力，去改变什么。
+audio music -

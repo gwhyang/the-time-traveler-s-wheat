@@ -1,3 +1,4 @@
+audio music "res://assets/music/告白.mp3"
 join charlotte left
 join kai right
 charlotte: 我的想法就是这样
@@ -8,6 +9,7 @@ charlotte: 你要答应，还是拒绝？
 - 拒绝
 	kai: 不行
 	charlotte (微笑): 为什么呢？明明刚刚你都要给我表白了
+audio "res://assets/sfx/磁带倒放.wav" [loop="false"]
 现在你才反应过来时间穿越了
 湖边，看天色跟刚刚也差不多
 charlotte (微笑): 「刚刚我们在说什么？」[pause=0.7]刚刚我在跟你表白

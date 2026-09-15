@@ -1,3 +1,4 @@
+audio music "res://assets/music/实验室.mp3"
 join kai left
 你看了一眼旁边的表，表上写着时间：2059年7月6日
 join professor center
@@ -21,3 +22,4 @@ kai (冷淡): 话说反了吧，更好地渡过现在的方法，应该是改变
 kai: 毕竟，当下不过是介于未来与过往间的幻觉。
 # 这里是不是还是很警戒，境界到可能不会这样说教？
 professor: ……唉
+audio music -

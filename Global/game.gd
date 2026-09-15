@@ -2,8 +2,7 @@ extends Node
 enum GameMode{WALK,DIALOGUE}
 enum BackGround{NONE,HOME,STREET,CLASSROOM,CORRIDOR,LAKE,LAB}
 var game_mode:GameMode=GameMode.WALK
-var scene_flag:int = 0b1111111111111111
-
+var scene_flag:int = 0b1
 signal background_changed(id:int)
 signal street_rian(is_rain:bool)
 signal game_end

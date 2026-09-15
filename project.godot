@@ -95,9 +95,15 @@ audio/channel_defaults={
 "loop": false,
 "volume": 0.0
 },
+"amb": {
+"audio_bus": "",
+"fade_length": 2.0,
+"loop": true,
+"volume": -8.0
+},
 "music": {
 "audio_bus": "",
-"fade_length": 0.0,
+"fade_length": 2.0,
 "loop": true,
 "volume": 0.0
 }

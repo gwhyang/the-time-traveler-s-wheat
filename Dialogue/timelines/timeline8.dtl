@@ -1,3 +1,4 @@
+audio music "res://assets/music/告白.mp3" [fade="0.8"]
 join charlotte right
 join kai left
 kai: 现在是什么时间，我迟到了多久？
@@ -32,3 +33,4 @@ charlotte (普通): 对我而言重要的，难道不应该我来决定吗？
 - ...
 - ...
 charlotte: 我的想法就是这样，你要答应，还是拒绝？
+audio music -

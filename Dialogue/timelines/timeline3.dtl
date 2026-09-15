@@ -1,3 +1,5 @@
+audio amb "res://assets/sfx/教室人声.wav"
+audio music -
 你看了一眼教室的表，表上写着时间：2026年9月17日
 join teacher center
 
@@ -26,6 +28,7 @@ label 1
 jump 1
 label 2
 join charlotte right
+audio music "res://assets/music/3后半段.mp3" [fade="0.2"]
 charlotte (微笑): 你可以坐到我这里。
 kai: 谢谢。
 charlotte: 你去哪里了？
@@ -36,6 +39,9 @@ charlotte (微笑): 他成功了吗？
 kai: 我不知道，管他呢？
 charlotte (微笑): 如果他成功了，记得告诉我一声，我想去看看。
 do Game.change_back_ground(4)
+audio music -
+audio music "res://assets/music/被欺负.mp3"
+audio amb -
 走廊上有一个门。
 你靠近门听到对话。
 
@@ -48,3 +54,4 @@ classmate: 「嗨嗨朋友们，你们还记得正义大使当时怎么模仿你
 classmate: 「先这样，再这样，然后那样…」
 classmate: 「好了听着，夏洛蒂，你也不会想一个人做小组作业吧？」
 classmate: 「小夏洛蒂，你也不会想在作业本里看到搞怪涂鸦吧？」
+audio music -
