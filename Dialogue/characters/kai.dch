@@ -22,7 +22,7 @@
 "image": "\"res://assets/portrait/凯/冷淡.PNG\""
 },
 "ignore_char_scale": false,
-"mirror": false,
+"mirror": true,
 "offset": Vector2(0, 100),
 "scale": 1.0,
 "scene": ""

@@ -1,4 +1,26 @@
 Godot Engine v4.7.2.stable.steam.ed1daf0bf - https://godotengine.org
 
-kai.dch default=神秘男子 portraits=["神秘男子", "冷淡", "微笑", "悲伤", "愤怒", "担忧", "警惕"] offset_y_ok=true
-professor.dch default=神秘男子 portraits=["冷淡", "微笑", "悲伤", "愤怒", "担忧", "神秘男子", "警惕"] offset_y_ok=true
+[V] e1.dtl ok, 7 处表情
+[V] e2.dtl ok, 15 处表情
+[V] e3.dtl ok, 8 处表情
+[V] e4.dtl ok, 4 处表情
+[V] e5.dtl ok, 4 处表情
+[V] final.dtl ok, 4 处表情
+[V] timeline1.dtl ok, 0 处表情
+[V] timeline10.dtl ok, 16 处表情
+[V] timeline11.dtl ok, 0 处表情
+[V] timeline12.dtl ok, 4 处表情
+[V] timeline13.dtl ok, 0 处表情
+[V] timeline14.dtl ok, 5 处表情
+[V] timeline15.dtl ok, 6 处表情
+[V] timeline16.dtl ok, 3 处表情
+[V] timeline2.dtl ok, 0 处表情
+[V] timeline3-1.dtl ok, 0 处表情
+[V] timeline3.dtl ok, 5 处表情
+[V] timeline4.dtl ok, 0 处表情
+[V] timeline5.dtl ok, 13 处表情
+[V] timeline6.dtl ok, 3 处表情
+[V] timeline7.dtl ok, 6 处表情
+[V] timeline8.dtl ok, 16 处表情
+[V] timeline9.dtl ok, 0 处表情
+[V] DONE bad=0

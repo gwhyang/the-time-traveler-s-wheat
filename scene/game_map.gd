@@ -4,7 +4,6 @@ enum {normal,preending,end}
 @export_range(0.0, 1.0, 0.01) var npc_spawn_chance: float = 0.4
 @export var dialgues:Array[TileResource]
 @export var end_presenting_dialgues:Array[TileResource]
-@export var end_dilgue:String
 const C_1 = preload("uid://b23ktyi5u0b3k")
 
 var timeline_component:Component = Component.new()
@@ -22,6 +21,14 @@ var end_special_move_tween:Tween
 
 var presnting_stage:int = normal
 var boss_waiting:bool = false
+var ending:bool = false
+
+@export_group("ending")
+@export var end_dilgue:String
+@export var player_charactor_scene:PackedScene = preload("res://scene/charactor_scene/kai.tscn")
+@export var charlotte_charactor_scene:PackedScene = preload("res://scene/charactor_scene/charoltte.tscn")
+@export var charlotte_offset:Vector2 = Vector2(72.0, 0.0)
+var ending_charactors:Array[Charactor] = []
 @export_group("edge spawn weights")
 @export_range(0.0, 1.0, 0.01) var connect_weight:float = 0.2
 @export_range(0.0, 1.0, 0.01) var player_fetch_weight:float = 0.15
@@ -37,25 +44,84 @@ func _ready() -> void:
 	# 写固定的地图
 	var fin_point:=Vector2i.ZERO
 	var teching_dialgues:Array[int] = [1,2,3,4]
-	#teching_dialgues.clear()
+	teching_dialgues.clear()
 	while inner_points.has(fin_point) or not teching_dialgues.is_empty():
 		fin_point+= Vector2i.RIGHT
 		edges.append(point_to_edge(fin_point,fin_point-Vector2i.RIGHT))
 		if not teching_dialgues.is_empty():
 			apply_dialgue_at(teching_dialgues.pop_front(),fin_point)
 	
-func end_game():
+## 结尾演出：铺出玩家与夏洛特的人物场景，注册到对话气泡布局，
+## 再启动结尾 timeline。注册后气泡会指向对应角色的 dialogue_anchor。
+func end_game() -> void:
+	if ending:
+		return
+	ending = true
+	presnting_stage = end
+	spawn_ending_charactors()
+
+	# register_character 是文本气泡布局（textp 样式）提供的。
+	# 必须先切样式并等布局 ready 再 start：否则 Dialogic 会在布局 ready 时
+	# 清状态，随后第一个文本事件用 change_style(base_style="") 回落到默认样式
+	# （project.godot 的 layout/default_style 指向不存在的路径），
+	# 布局会被换成内置 VisualNovel 布局，气泡注册随之失效。
+	Dialogic.Styles.change_style("textp")
+	await get_tree().process_frame
+
 	var laylout:= Dialogic.start(end_dilgue)
 	if not laylout:
-		printerr("snosof")
+		printerr("end_game: 无法启动 timeline ",end_dilgue)
 		return
-	laylout.resister_charactor("kai",player.dialogue_anchor)
-	laylout.resister_charactor("charlotte",sprite_component.entity_find(end_special_id).dialogue_anchor)
-	
-	
-	pass
+	if ending_charactors.size() < 2:
+		printerr("end_game: 人物场景缺失，无法注册角色")
+		return
+	if not laylout.has_method("register_character"):
+		printerr("end_game: 当前对话布局不支持 register_character（需要 textp 气泡样式）")
+		return
+	# Dialogic 的文本气泡布局 API：register_character(角色, 气泡指向的节点)
+	laylout.register_character("kai",ending_charactors[0].dialogue_anchor)
+	laylout.register_character("charlotte",ending_charactors[1].dialogue_anchor)
+	# 结尾 timeline 里说话的是 young_chroltte（童年夏洛蒂），
+	# 名字对不上就不会把气泡挂到夏洛特身上，这里一起注册。
+	laylout.register_character("young_chroltte",ending_charactors[1].dialogue_anchor)
+
+## 在玩家当前位置铺出两个人物场景（玩家位与偏移位），并隐藏地图上的玩家标记
+func spawn_ending_charactors() -> void:
+	_hide_player_marker()
+	ending_charactors.clear()
+	var player_posi := player.global_position
+	var player_charactor := spawn_charactor(player_charactor_scene,player_posi)
+	if player_charactor:
+		ending_charactors.append(player_charactor)
+	var charlotte_charactor := spawn_charactor(charlotte_charactor_scene,player_posi+charlotte_offset)
+	if charlotte_charactor:
+		ending_charactors.append(charlotte_charactor)
+
+## 只隐藏玩家身上的可见标记（贴图/调试显示），保留 Camera2D，
+## 否则摄像机会随节点一起失效导致画面停住。
+func _hide_player_marker() -> void:
+	if player == null:
+		return
+	for child in player.get_children():
+		if child is Camera2D:
+			continue
+		if child is CanvasItem:
+			child.visible = false
+
+func spawn_charactor(scene:PackedScene,posi:Vector2)->Charactor:
+	if scene == null:
+		printerr("spawn_charactor: scene is null")
+		return null
+	var charactor := scene.instantiate() as Charactor
+	if charactor == null:
+		printerr("spawn_charactor: scene root is not Charactor")
+		return null
+	add_child(charactor)
+	charactor.global_position = posi
+	return charactor
 
 func _input(event: InputEvent) -> void:
+	if ending:return
 	if !Game.game_mode==Game.GameMode.WALK:return
 	if boss_waiting:return
 	if event.is_action_released("move"):
@@ -68,6 +134,8 @@ func _process(delta: float) -> void:
 	
 	queue_redraw()
 	process_background_overrides()
+	if ending:
+		return
 	if boss_waiting:
 		return
 	if move_tween and move_tween.is_running():
@@ -94,24 +162,32 @@ func _process(delta: float) -> void:
 			
 		if background_component.has_entity(id):
 			Game.change_back_ground(background_component.entity_free(id))
-		if (Game.scene_flag & 1 << (dialgues.size()-1))>0:
+		# 没有 end_presenting_dialgues 时不存在 boss，preending 永不触发。
+		if not end_presenting_dialgues.is_empty()\
+				and (Game.scene_flag & 1 << (dialgues.size()-1))>0:
 			presnting_stage = preending
-		# end 对话下标为 dialgues.size() .. dialgues.size()+n-1，
-		# 最后一段的下标是 dialgues.size()-1+n（原来少加 1，导致
-		# 倒数第二段触发时就提前进入 end，最后一段永远刷不出来）。
-		if (Game.scene_flag & 1 << (dialgues.size()-1+end_presenting_dialgues.size()))>0:
-			presnting_stage = end
 
-		# 只在真的启动了一段对话时才等待结束，否则 timeline_ended
-		# 永远不会触发，boss_waiting 会卡死导致无法移动。
-		if id == end_special_id and dialogue_started:
+		# 没有启动对话就没什么要等的（否则 timeline_ended 永远不来，
+		# boss_waiting 卡死会导致无法移动）。
+		if not dialogue_started:
+			return
+
+		# 全序列最后一段的下标：普通序列 dialgues.size() 段之后，
+		# 还有 end 序列 n 段，所以最后一段是 dialgues.size()-1+n。
+		# end_presenting_dialgues 为空时它就退化为最后一段普通对话。
+		# 这一段播完直接进入结尾演出（end_game），不再挪窝。
+		if dialogue_index == dialgues.size() + end_presenting_dialgues.size() - 1:
 			boss_waiting = true
 			await Dialogic.timeline_ended
 			boss_waiting = false
-			if dialogue_index == dialgues.size()+end_presenting_dialgues.size()-1:
-				# 最后一段 end 对话播完，进入收尾，不再挪窝
-				end_game()
-				return
+			end_game()
+			return
+
+		# 其余 end 对话播完后，boss 挪到玩家相邻的随机格并换下一段。
+		if id == end_special_id:
+			boss_waiting = true
+			await Dialogic.timeline_ended
+			boss_waiting = false
 			var dirs:int = hex_neibghbors.pick_random()
 			if dirs<3: dirs = hex_neibghbors.pick_random()
 			relocate_end_special(get_neighbor_cell(player_cell,dirs),dialogue_index)

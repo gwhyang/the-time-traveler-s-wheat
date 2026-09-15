@@ -16,5 +16,6 @@ label 1
 - 出门 | [if {choice_finish_count} >= 2.0] [else="disable"]
 	
 	你从过道离开。
+	set {choice_finish_count} = 0.0
 	[end_timeline]
 jump 1
